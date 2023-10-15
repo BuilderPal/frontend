@@ -85,6 +85,7 @@ class Guidance extends Component {
             <TabsContent value="details">
               <Details
                 {...this.state}
+                changeCurrentInstruction={this.changeCurrentInstruction}
               />
             </TabsContent>
             <TabsContent value="instructions">

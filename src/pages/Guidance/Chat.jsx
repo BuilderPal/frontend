@@ -17,13 +17,13 @@ class Chat extends Component {
         <img
           src={forest}
           className="absolute inset-0 w-full h-full object-cover"
-          alt="Forest Background"
+          alt="Forest"
         />
   
         {/* Content container */}
         <div className="grid items-center h-full w-full py-4 relative z-10">
           <div className="grid gap-4">
-            <img src={happy} className="w-[200px] mx-auto" alt="Happy Image" />
+            <img src={happy} className="w-[200px] mx-auto" alt="Happy" />
             <TypingText text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, quas eos quis nisi tenetur labore. Officia ducimus ratione voluptas veniam." />
           </div>
         </div>

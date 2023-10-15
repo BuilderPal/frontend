@@ -37,8 +37,8 @@ class Instruction extends Component {
       </div>
 
       <h2 className='text-2xl my-auto font-bold mb-2 mt-6'>Instructions</h2>
-      {this.state.instruction.body.map(paragraph => 
-        <InstructionParagraph paragraph={paragraph}/>
+      {this.state.instruction.body.map((paragraph, i) => 
+        <InstructionParagraph key={i} paragraph={paragraph}/>
       )}
 
       <h2 className='text-2xl my-auto font-bold mb-2 mt-6'>Images</h2>

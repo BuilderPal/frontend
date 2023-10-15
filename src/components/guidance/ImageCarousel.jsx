@@ -19,7 +19,7 @@ class ImageCarousel extends Component {
       >
         {this.props.images.map((image, index) => (
           <div key={index}>
-            <img src={image} alt={`Image ${index}`} className='h-96 object-cover rounded-xl'/>
+            <img src={image} alt={`${index}`} className='h-96 object-cover rounded-xl'/>
           </div>
         ))}
       </Carousel>

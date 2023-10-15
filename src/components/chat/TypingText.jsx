@@ -24,14 +24,16 @@ class TypingText extends Component {
       });
 
       // Add a delay between characters (adjust this as needed)
-      setTimeout(this.animateText.bind(this), 50); // 100ms delay
+      setTimeout(this.animateText.bind(this), 50); // 50ms delay
     }
   }
 
   render() {
-    return <div className='w-full bg-gradient-to-r from-transparent via-[#000] to-transparent via-50% to-100% p-4 rounded-xl text-white'>
-      <h2 className='text-3xl font-bold'>BuilderPal</h2>
-      {this.state.text}
+    return <div
+      className='w-full bg-gradient-to-r from-transparent via-[#000]/40 to-transparent via-50% to-100% p-4 rounded-xl text-white bg-blend-screen'
+      >
+      <h2 className='text-xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>BuilderPal</h2>
+      <p className='drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>{this.state.text}</p>
     </div>;
   }
 }

@@ -27,7 +27,9 @@ class Instruction extends Component {
   render() {
     return <div className='text-white w-full mb-10 overflow-y-auto'>
       <div className='mb-6 mt-6'>
-        <InstructionPreview instruction={this.state.instruction} current={this.props.current}/>
+        <InstructionPreview
+          instruction={this.state.instruction}
+          isIdle={true}/>
       </div>
       <div className='flex place-content-between'>
         {this.props.current > 0 ? <Button variant='secondary' onClick={() => this.props.changeCurrentInstruction(this.props.current-1)}>Previous Step</Button> : <></>}

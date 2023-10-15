@@ -68,6 +68,7 @@ module.exports = {
         nuso: {
           DEFAULT: "#EF7C00",
           light: "#FFA647",
+          foreground: '#FFF'
         },
         grey: {
           DEFAULT: "#999999",

@@ -27,6 +27,7 @@ class Details extends Component {
       <div className='grid gap-4'>
         {this.props.resources.map((resource, i) =>
           <ResourcePreview
+            key={i}
             resource={resource}
             />
         )}
@@ -36,8 +37,10 @@ class Details extends Component {
       <div className='grid gap-4'>
         {this.props.instructions.map((instruction, i) =>
           <InstructionPreview
+            key={i}
             instruction={instruction}
             current={this.props.current}
+            changeCurrentInstruction={this.props.changeCurrentInstruction}
             />
         )}
       </div>

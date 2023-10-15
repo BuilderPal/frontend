@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 import { Separator } from 'components/ui/separator';
 import Details from './Details';
 import Instruction from './Instruction';
+import Chat from './Chat';
 
 class Guidance extends Component {
   constructor(props) {
@@ -99,7 +100,7 @@ class Guidance extends Component {
         </Tabs>
       </main>
       <aside className='h-screen w-1/3 float-right'>
-
+        <Chat/>
       </aside>
     </div>
   }

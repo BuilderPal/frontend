@@ -1,11 +1,15 @@
 import { Component } from 'react';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class TypingText extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      fullText: this.props.history[this.props.history.length-1],
       text: '',
       currentIndex: 0,
+      currentChat: this.props.history.length-1
     };
   }
 
@@ -13,13 +17,20 @@ class TypingText extends Component {
     this.animateText();
   }
 
+  changeCurrentChat(newCurrent) {
+    this.setState({
+      ...this.state,
+      currentChat: newCurrent,
+      text: this.props.history[newCurrent]
+    });
+  }
+
   animateText() {
     const { text, currentIndex } = this.state;
-    const fullText = this.props.text;
 
-    if (currentIndex < fullText.length) {
+    if (currentIndex < this.state.fullText.length) {
       this.setState({
-        text: text + fullText[currentIndex],
+        text: text + this.state.fullText[currentIndex],
         currentIndex: currentIndex + 1,
       });
 
@@ -29,11 +40,25 @@ class TypingText extends Component {
   }
 
   render() {
-    return <div
-      className='w-full bg-gradient-to-r from-transparent via-[#000]/40 to-transparent via-50% to-100% p-4 rounded-xl text-white bg-blend-screen'
-      >
-      <h2 className='text-xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>BuilderPal</h2>
-      <p className='drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>{this.state.text}</p>
+    return <div className='w-full px-4 py-2'>
+      <h2 className='ms-4 rounded-t-lg text-xl font-medium bg-white/50 w-fit p-2'>BuilderPal</h2>
+      <div className='bg-black/50 text-white border-[1px] border-white rounded-lg p-2'>
+        <p>{this.state.text}</p>
+        <br/>
+        <div className='w-full text-center'>
+          <FontAwesomeIcon
+            className={`${this.state.currentChat === 0 && 'opacity-0'} cursor-pointer`}
+            icon={faChevronLeft}
+            onClick={() => this.changeCurrentChat(this.state.currentChat-1)}/>
+          &nbsp;
+          {this.state.currentChat+1}/{this.props.history.length}
+          &nbsp;
+          <FontAwesomeIcon
+            className={`${this.state.currentChat === this.props.history.length-1 && 'opacity-0'} cursor-pointer`}
+            icon={faChevronRight}
+            onClick={() => this.changeCurrentChat(this.state.currentChat+1)}/>
+        </div>
+      </div>
     </div>;
   }
 }

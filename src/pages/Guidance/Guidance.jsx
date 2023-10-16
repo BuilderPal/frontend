@@ -131,7 +131,7 @@ class Guidance extends Component {
           </section>
         </Tabs>
       </main>
-      <aside className='h-screen w-1/3 float-right'>
+      <aside className='h-screen w-1/3 float-left'>
         <Chat/>
       </aside>
 </div>

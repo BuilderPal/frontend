@@ -35,7 +35,7 @@ class InstructionPreview extends Component {
         </Avatar>
       </div>
       <h3 className='text-lg my-auto'>
-        <span className='font-bold'>{this.state.isOngoing ? 'Current Step' : `Step ${this.props.instruction.instruction_index+1}`}</span>: {this.props.instruction.title}
+        <span className='font-bold'>{this.props.instruction.title}</span>
       </h3>
     </div>;
   }

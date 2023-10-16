@@ -4,7 +4,7 @@ import { Separator } from 'components/ui/separator';
 import Details from './Details';
 import Instruction from './Instruction';
 import Chat from './Chat';
-import API from '../../lib/utils'; // You should import the API class
+import { API } from '../../lib/utils';
 
 class Guidance extends Component {
   constructor(props) {
@@ -100,8 +100,9 @@ class Guidance extends Component {
   }
 
   render() {
-    return <div className='float'>
-      <main className='w-2/3 bg-nusb float-right'>
+    return (
+      <div className='float'>
+      <main className='w-2/3 bg-nusb float-left'>
         <Tabs defaultValue='details' className='h-screen p-4'>
           <menu className='grid content-center h-[10%]'>
             <div className='flex place-content-between'>

@@ -11,7 +11,7 @@ export function capitalise(text) {
 };
 
 
-class API {
+class APIClass {
     #baseUrl = process.env.REACT_APP_API_BASE_URL;  // Private field
 
     // Helper method to construct full URLs
@@ -87,4 +87,4 @@ class API {
     }
 }
 
-export default new API();
+export const API = new APIClass()

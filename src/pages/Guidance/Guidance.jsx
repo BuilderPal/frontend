@@ -4,6 +4,7 @@ import { Separator } from 'components/ui/separator';
 import Details from './Details';
 import Instruction from './Instruction';
 import Chat from './Chat';
+import API from '../../lib/utils'; // You should import the API class
 
 class Guidance extends Component {
   constructor(props) {
@@ -61,6 +62,36 @@ class Guidance extends Component {
     };
   }
 
+  componentDidMount() {
+    const user_project_id = "652d0c4c5726abd7b0e8b038";
+    API.getUserProject(user_project_id).then(response => {
+      const project = response.data;
+      this.setState({
+        title: project.title,
+        duration_in_minutes: project.duration_in_minutes,
+        complexity: project.complexity,
+        resources: project.resources,
+        categories: project.categories,
+        description: project.description,
+        instructions: project.instructions.map(instruction => ({
+          instruction_index: instruction.instruction_index,
+          title: instruction.title,
+          body: instruction.content,
+          images: instruction.media_items
+            .filter(media => media.media_type === 'image')
+            .map(media => media.url)
+        })),
+        current: project.current_instruction_index
+      }, () => {
+        console.log(this.state);
+      });
+      
+    }).catch(error => {
+      console.error("Error fetching user project:", error);
+    });
+}
+
+
   changeCurrentInstruction = (newCurrent) => {
     this.setState(prev => ({
       ...prev,
@@ -102,8 +133,10 @@ class Guidance extends Component {
       <aside className='h-screen w-1/3 float-left'>
         <Chat/>
       </aside>
-    </div>
-  }
+</div>
+    );
+  }    
+
 }
 
 export default Guidance;

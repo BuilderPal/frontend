@@ -8,7 +8,9 @@ class ChatInput extends Component {
   }
 
   render() {
-    return <Textarea placeholder='hello'/>;
+    return <div className='p-4'>
+      <Textarea placeholder='hello' className='text-black'/>
+    </div>;
   }
 }
 

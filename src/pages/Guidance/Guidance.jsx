@@ -70,7 +70,7 @@ class Guidance extends Component {
 
   render() {
     return <div className='float'>
-      <main className='w-2/3 bg-nusb float-left'>
+      <main className='w-2/3 bg-nusb float-right'>
         <Tabs defaultValue='details' className='h-screen p-4'>
           <menu className='grid content-center h-[10%]'>
             <div className='flex place-content-between'>
@@ -99,7 +99,7 @@ class Guidance extends Component {
           </section>
         </Tabs>
       </main>
-      <aside className='h-screen w-1/3 float-right'>
+      <aside className='h-screen w-1/3 float-left'>
         <Chat/>
       </aside>
     </div>

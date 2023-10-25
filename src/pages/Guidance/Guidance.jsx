@@ -1,72 +1,73 @@
-import { Component } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 import { Separator } from 'components/ui/separator';
 import Details from './Details';
 import Instruction from './Instruction';
-import Chat from './Chat';
+import Chat from '../../components/chat/Chat';
 import { API } from '../../lib/utils';
+import ClipLoader from "react-spinners/ClipLoader";
 
-class Guidance extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 0,
-      title: 'Sample Project Title',
-      duration_in_minutes: 60,
-      complexity: 'high',
-      resources: ['Resource A', 'Resource B'],
-      categories: ['Category A', 'Category B'],
-      description: 'This is a description of the sample project.',
-      instructions: [
-        {
-          instruction_index: 0,
-          title: 'Start with a Diamond',
-          body: [
-            'First, begin with a diamond piece of copy paper',
-            'I have outlined the edges of my paper in blue to make it easier.',
-            '(TO MAKE A SQUARE: You can make a square from a rectangular piece.)',
-            'I usually make two snowflakes for every 8.5"x11" piece of paper.'
-          ],
-          images: [
-            'https://content.instructables.com/FY2/WTVT/KFWJO05V/FY2WTVTKFWJO05V.jpg?auto=webp&frame=1&width=1024&height=1024&fit=bounds&md=0889d7a436a4385d133da7232be78fe9',
-            'https://content.instructables.com/FA5/85WW/KFQTVHPK/FA585WWKFQTVHPK.jpg?auto=webp&frame=1&fit=bounds&md=b311f18cf945ecf2ba6602a84449b86a'
-          ]
-        },
-        {
-          instruction_index: 1,
-          title: 'Start with a Square',
-          body: [
-            'First, begin with a square piece of copy paper',
-            'I have outlined the edges of my paper in blue to make it easier.',
-            '(TO MAKE A SQUARE: You can make a square from a rectangular piece.)',
-            'I usually make two snowflakes for every 8.5"x11" piece of paper.'
-          ],
-          images: [
-            'https://content.instructables.com/FY2/WTVT/KFWJO05V/FY2WTVTKFWJO05V.jpg?auto=webp&frame=1&width=1024&height=1024&fit=bounds&md=0889d7a436a4385d133da7232be78fe9'
-          ]
-        },
-        {
-          instruction_index: 2,
-          title: 'Start with a Circle',
-          body: [
-            'First, begin with a circle piece of copy paper',
-            'I have outlined the edges of my paper in blue to make it easier.',
-            '(TO MAKE A SQUARE: You can make a square from a rectangular piece.)',
-            'I usually make two snowflakes for every 8.5"x11" piece of paper.'
-          ],
-          images: [
-            'https://content.instructables.com/FY2/WTVT/KFWJO05V/FY2WTVTKFWJO05V.jpg?auto=webp&frame=1&width=1024&height=1024&fit=bounds&md=0889d7a436a4385d133da7232be78fe9'
-          ]
-        }
+import React, { useState, useEffect } from 'react';
+
+const templateUserProject = {
+  title: 'Sample Project Title',
+  duration_in_minutes: 60,
+  complexity: 'high',
+  resources: ['Resource A', 'Resource B'],
+  categories: ['Category A', 'Category B'],
+  description: 'This is a description of the sample project.',
+  instructions: [
+    {
+      instruction_index: 0,
+      title: 'Start with a Diamond',
+      body: [
+        'First, begin with a diamond piece of copy paper',
+        'I have outlined the edges of my paper in blue to make it easier.',
+        '(TO MAKE A SQUARE: You can make a square from a rectangular piece.)',
+        'I usually make two snowflakes for every 8.5"x11" piece of paper.'
       ],
-    };
-  }
+      images: [
+        'https://content.instructables.com/FY2/WTVT/KFWJO05V/FY2WTVTKFWJO05V.jpg?auto=webp&frame=1&width=1024&height=1024&fit=bounds&md=0889d7a436a4385d133da7232be78fe9',
+        'https://content.instructables.com/FA5/85WW/KFQTVHPK/FA585WWKFQTVHPK.jpg?auto=webp&frame=1&fit=bounds&md=b311f18cf945ecf2ba6602a84449b86a'
+      ]
+    },
+    {
+      instruction_index: 1,
+      title: 'Start with a Square',
+      body: [
+        'First, begin with a square piece of copy paper',
+        'I have outlined the edges of my paper in blue to make it easier.',
+        '(TO MAKE A SQUARE: You can make a square from a rectangular piece.)',
+        'I usually make two snowflakes for every 8.5"x11" piece of paper.'
+      ],
+      images: [
+        'https://content.instructables.com/FY2/WTVT/KFWJO05V/FY2WTVTKFWJO05V.jpg?auto=webp&frame=1&width=1024&height=1024&fit=bounds&md=0889d7a436a4385d133da7232be78fe9'
+      ]
+    },
+    {
+      instruction_index: 2,
+      title: 'Start with a Circle',
+      body: [
+        'First, begin with a circle piece of copy paper',
+        'I have outlined the edges of my paper in blue to make it easier.',
+        '(TO MAKE A SQUARE: You can make a square from a rectangular piece.)',
+        'I usually make two snowflakes for every 8.5"x11" piece of paper.'
+      ],
+      images: [
+        'https://content.instructables.com/FY2/WTVT/KFWJO05V/FY2WTVTKFWJO05V.jpg?auto=webp&frame=1&width=1024&height=1024&fit=bounds&md=0889d7a436a4385d133da7232be78fe9'
+      ]
+    }
+  ],
+}
 
-  componentDidMount() {
-    const user_project_id = "652d0c4c5726abd7b0e8b038";
-    API.getUserProject(user_project_id).then(response => {
+function Guidance({ userProjectId }) {
+  const [userProject, setUserProject] = useState(templateUserProject)
+  const [instructionIndex, setInstructionIndex] = useState(0)
+  const [isLoadingProject, setIsLoadingProject] = useState(false)
+  useEffect(() => {
+    API.getUserProject(userProjectId).then(response => {
       const project = response.data;
-      this.setState({
+      setUserProject(prevState => ({
+        ...prevState,
         title: project.title,
         duration_in_minutes: project.duration_in_minutes,
         complexity: project.complexity,
@@ -81,27 +82,23 @@ class Guidance extends Component {
             .filter(media => media.media_type === 'image')
             .map(media => media.url)
         })),
-        current: project.current_instruction_index
-      }, () => {
-        console.log(this.state);
+      }), (_) => {
+        setIsLoadingProject(false)
       });
-      
     }).catch(error => {
       console.error("Error fetching user project:", error);
     });
-}
+  }, []);
 
-
-  changeCurrentInstruction = (newCurrent) => {
-    this.setState(prev => ({
-      ...prev,
+  const changeCurrentInstruction = (newCurrent) => {
+    setUserProject(prevState => ({
+      ...prevState,
       current: newCurrent
-    }))
-  }
+    }));
+  };
 
-  render() {
-    return (
-      <div className='float'>
+  return (
+    <div className='float'>
       <main className='w-2/3 bg-nusb float-left'>
         <Tabs defaultValue='details' className='h-screen p-4'>
           <menu className='grid content-center h-[10%]'>
@@ -113,31 +110,41 @@ class Guidance extends Component {
               </TabsList>
             </div>
           </menu>
-          <Separator className='my-2'/>
+          <Separator className='my-2' />
           <section className='h-[90%] overflow-y-auto'>
-            <TabsContent value="details">
-              <Details
-                {...this.state}
-                changeCurrentInstruction={this.changeCurrentInstruction}
-              />
-            </TabsContent>
-            <TabsContent value="instructions">
-              <Instruction
-                instructions={this.state.instructions}
-                current={this.state.current}
-                changeCurrentInstruction={this.changeCurrentInstruction}
-              />
-            </TabsContent>
+            {
+              isLoadingProject ? <ClipLoader
+                loading={isLoadingProject}
+                size={150}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              /> : (
+                <>
+                  <TabsContent value="details">
+                    <Details
+                      {...userProject}
+                      instructionIndex={instructionIndex}
+                      setInstructionIndex={setInstructionIndex}
+                    />
+                  </TabsContent>
+                  <TabsContent value="instructions">
+                    <Instruction
+                      instructions={userProject.instructions}
+                      instructionIndex={instructionIndex}
+                      setInstructionIndex={setInstructionIndex}
+                    />
+                  </TabsContent>
+                </>
+              )
+            }
           </section>
         </Tabs>
       </main>
       <aside className='h-screen w-1/3 float-left'>
-        <Chat/>
+        <Chat />
       </aside>
-</div>
-    );
-  }    
-
+    </div>
+  );
 }
 
 export default Guidance;

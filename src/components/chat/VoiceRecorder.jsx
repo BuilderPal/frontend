@@ -1,48 +1,60 @@
-import { Component } from 'react';
-import { AudioRecorder } from 'react-audio-voice-recorder';
+import React, { useState, useCallback } from 'react';
 
-class VoiceRecorder extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isRecording: false,
-      audioData: null,
-    };
-  }
+const VoiceRecorder = ({ botIsGenerating, onSend }) => {
+  const [isRecording, setIsRecording] = useState(false);
+  const [audioData, setAudioData] = useState(null);
 
-  startRecording = () => {
-    this.setState({ isRecording: true });
+  const handleRecordingStart = () => {
+    if (!botIsGenerating) {
+      setIsRecording(true);
+    }
   };
 
-  stopRecording = () => {
-    this.setState({ isRecording: false });
+  const handleRecordingStop = (audioBlob) => {
+    if (isRecording) {
+      setIsRecording(false);
+      setAudioData(audioBlob);
+      // Here you would handle the audioBlob, perhaps uploading it to a server
+      // and then you would probably want to reset the component state.
+    }
   };
 
-  onAudioData = (audioData) => {
-    this.setState({ audioData });
-  };
+  // const handlers = useSwipeable({
+  //   onSwipedLeft: () => {
+  //     if (isRecording) {
+  //       // Delete the recording or stop without saving
+  //       setIsRecording(false);
+  //       setAudioData(null);
+  //     }
+  //   },
+  //   onSwipedUp: () => {
+  //     if (isRecording && audioData) {
+  //       // Send the recording
+  //       setIsRecording(false);
+  //       onSend({ audioFileLink: 'your-audio-link', audioBlob: audioData });
+  //       setAudioData(null);
+  //     }
+  //   },
+  //   trackMouse: true
+  // });
 
-  render() {
-    return (
-      <div>
-        <h1>Voice Recorder</h1>
-        {this.state.isRecording ? (
-          <button onClick={this.stopRecording}>Stop Recording</button>
-        ) : (
-          <button onClick={this.startRecording}>Start Recording</button>
-        )}
-        {this.state.audioData && (
-          <audio controls>
-            <source src={this.state.audioData} type="audio/wav" />
-          </audio>
-        )}
-        <AudioRecorder
-          record={this.state.isRecording}
-          onStop={(data) => this.onAudioData(data.url)}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <></>
+    // <div {...handlers}>
+    //   <button
+    //     onMouseDown={handleRecordingStart}
+    //     onMouseUp={() => handleRecordingStop(audioData)}
+    //     onTouchStart={handleRecordingStart}
+    //     onTouchEnd={() => handleRecordingStop(audioData)}
+    //     disabled={botIsGenerating || isRecording}
+    //     style={{ backgroundColor: isRecording ? 'red' : 'gray' }}
+    //   >
+    //     {isRecording ? 'Recording...' : 'Hold to Record'}
+    //   </button>
+    //   {isRecording && <Recorder command="start" />}
+    //   {!isRecording && audioData && <audio src={audioData} controls />}
+    // </div>
+  );
+};
 
 export default VoiceRecorder;

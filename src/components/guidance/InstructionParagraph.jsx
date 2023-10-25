@@ -1,14 +1,7 @@
-import { Component } from 'react';
+import React from 'react'
 
-class InstructionParagraph extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return <p className='mt-2'>{this.props.paragraph}</p>
-  }
+const InstructionParagraph = ({ paragraph }) => {
+  return (<p className='mt-2'>{paragraph}</p>)
 }
 
-export default InstructionParagraph ;
+export default InstructionParagraph

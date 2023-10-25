@@ -1,16 +1,12 @@
-import { Component } from 'react';
-import './globals.css';
-import { Guidance } from './pages/Guidance';
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return <Guidance/>;
-  }
+import './globals.css'
+import { Guidance } from './pages/Guidance'
+import React from 'react'
+const App = () => {
+  return (
+    <>
+    <Guidance userProjectId="652d0c4c5726abd7b0e8b038"/>
+    </>
+  )
 }
 
-export default App;
+export default App

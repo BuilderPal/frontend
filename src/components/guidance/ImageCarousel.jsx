@@ -1,8 +1,8 @@
-import { Component } from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import React from 'react'
+import { Carousel } from 'react-responsive-carousel'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
-const ImageCarousel = ({images}) => {
+const ImageCarousel = ({ images }) => {
   return (
     <Carousel
         showThumbs={false}
@@ -20,4 +20,4 @@ const ImageCarousel = ({images}) => {
   )
 }
 
-export default ImageCarousel;
+export default ImageCarousel

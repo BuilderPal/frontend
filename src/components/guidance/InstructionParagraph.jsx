@@ -1,5 +1,7 @@
 import React from 'react'
 
-export default ({paragraph}) => {
+const InstructionParagraph = ({ paragraph }) => {
   return (<p className='mt-2'>{paragraph}</p>)
 }
+
+export default InstructionParagraph

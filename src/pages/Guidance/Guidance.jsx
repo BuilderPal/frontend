@@ -1,12 +1,12 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
-import { Separator } from 'components/ui/separator';
-import Details from './Details';
-import Instruction from './Instruction';
-import Chat from '../../components/chat/Chat';
-import { API } from '../../lib/utils';
-import ClipLoader from "react-spinners/ClipLoader";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs'
+import { Separator } from 'components/ui/separator'
+import Details from './Details'
+import Instruction from './Instruction'
+import Chat from '../../components/chat/Chat'
+import { API } from '../../lib/utils'
+import ClipLoader from 'react-spinners/ClipLoader'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 const templateUserProject = {
   title: 'Sample Project Title',
@@ -56,16 +56,16 @@ const templateUserProject = {
         'https://content.instructables.com/FY2/WTVT/KFWJO05V/FY2WTVTKFWJO05V.jpg?auto=webp&frame=1&width=1024&height=1024&fit=bounds&md=0889d7a436a4385d133da7232be78fe9'
       ]
     }
-  ],
+  ]
 }
 
-function Guidance({ userProjectId }) {
+const Guidance = ({ userProjectId }) => {
   const [userProject, setUserProject] = useState(templateUserProject)
   const [instructionIndex, setInstructionIndex] = useState(0)
   const [isLoadingProject, setIsLoadingProject] = useState(false)
   useEffect(() => {
     API.getUserProject(userProjectId).then(response => {
-      const project = response.data;
+      const project = response.data
       setUserProject(prevState => ({
         ...prevState,
         title: project.title,
@@ -81,21 +81,14 @@ function Guidance({ userProjectId }) {
           images: instruction.media_items
             .filter(media => media.media_type === 'image')
             .map(media => media.url)
-        })),
+        }))
       }), (_) => {
         setIsLoadingProject(false)
-      });
+      })
     }).catch(error => {
-      console.error("Error fetching user project:", error);
-    });
-  }, []);
-
-  const changeCurrentInstruction = (newCurrent) => {
-    setUserProject(prevState => ({
-      ...prevState,
-      current: newCurrent
-    }));
-  };
+      console.error('Error fetching user project:', error)
+    })
+  }, [])
 
   return (
     <div className='float'>
@@ -113,29 +106,31 @@ function Guidance({ userProjectId }) {
           <Separator className='my-2' />
           <section className='h-[90%] overflow-y-auto'>
             {
-              isLoadingProject ? <ClipLoader
-                loading={isLoadingProject}
-                size={150}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              /> : (
-                <>
-                  <TabsContent value="details">
-                    <Details
-                      {...userProject}
-                      instructionIndex={instructionIndex}
-                      setInstructionIndex={setInstructionIndex}
-                    />
-                  </TabsContent>
-                  <TabsContent value="instructions">
-                    <Instruction
-                      instructions={userProject.instructions}
-                      instructionIndex={instructionIndex}
-                      setInstructionIndex={setInstructionIndex}
-                    />
-                  </TabsContent>
-                </>
-              )
+              isLoadingProject
+                ? <ClipLoader
+                  loading={isLoadingProject}
+                  size={150}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+                : (
+                  <>
+                    <TabsContent value="details">
+                      <Details
+                        {...userProject}
+                        instructionIndex={instructionIndex}
+                        setInstructionIndex={setInstructionIndex}
+                      />
+                    </TabsContent>
+                    <TabsContent value="instructions">
+                      <Instruction
+                        instructions={userProject.instructions}
+                        instructionIndex={instructionIndex}
+                        setInstructionIndex={setInstructionIndex}
+                      />
+                    </TabsContent>
+                  </>
+                  )
             }
           </section>
         </Tabs>
@@ -144,7 +139,7 @@ function Guidance({ userProjectId }) {
         <Chat />
       </aside>
     </div>
-  );
+  )
 }
 
-export default Guidance;
+export default Guidance

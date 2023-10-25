@@ -1,1 +1,1 @@
-export { default as Guidance } from './Guidance';
+export { default as Guidance } from './Guidance'

@@ -1,10 +1,10 @@
-import React from 'react';
-import InstructionParagraph from 'components/guidance/InstructionParagraph';
-import ImageCarousel from 'components/guidance/ImageCarousel';
-import InstructionPreview from '../../components/guidance/InstructionPreview';
-import { Button } from 'components/ui/button';
+import React from 'react'
+import InstructionParagraph from 'components/guidance/InstructionParagraph'
+import ImageCarousel from 'components/guidance/ImageCarousel'
+import InstructionPreview from '../../components/guidance/InstructionPreview'
+import { Button } from 'components/ui/button'
 
-const Instruction = ({instructions, instructionIndex, setInstructionIndex}) => {
+const Instruction = ({ instructions, instructionIndex, setInstructionIndex }) => {
   const instruction = instructions[instructionIndex]
   return (
     <div className='text-white w-full mb-10 overflow-y-auto'>
@@ -14,12 +14,12 @@ const Instruction = ({instructions, instructionIndex, setInstructionIndex}) => {
           isIdle={true}/>
       </div>
       <div className='flex place-content-between'>
-        {instructionIndex > 0 ? <Button variant='secondary' onClick={() => setInstructionIndex(instructionIndex-1)}>Previous Step</Button> : <></>}
-        {instructionIndex+1 < instructions.length ? <Button variant='accent' onClick={() => setInstructionIndex(instructionIndex+1)}>Next Step</Button> : <></>}
+        {instructionIndex > 0 ? <Button variant='secondary' onClick={() => setInstructionIndex(instructionIndex - 1)}>Previous Step</Button> : <></>}
+        {instructionIndex + 1 < instructions.length ? <Button variant='accent' onClick={() => setInstructionIndex(instructionIndex + 1)}>Next Step</Button> : <></>}
       </div>
 
       <h2 className='text-2xl my-auto font-bold mb-2 mt-6'>Instructions</h2>
-      {instruction.body.map((paragraph, i) => 
+      {instruction.body.map((paragraph, i) =>
         <InstructionParagraph key={i} paragraph={paragraph}/>
       )}
 
@@ -29,4 +29,4 @@ const Instruction = ({instructions, instructionIndex, setInstructionIndex}) => {
   )
 }
 
-export default Instruction;
+export default Instruction

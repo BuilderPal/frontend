@@ -1,14 +1,13 @@
 import React from 'react'
-import { Badge } from 'components/ui/badge';
-import { faClock, faUser } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import project from 'assets/project/project-sample.png';
-import InstructionPreview from 'components/guidance/InstructionPreview';
-import ResourcePreview from 'components/guidance/ResourcePreview';
-import { capitalise } from 'lib/utils';
+import { Badge } from 'components/ui/badge'
+import { faClock, faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import project from 'assets/project/project-sample.png'
+import InstructionPreview from 'components/guidance/InstructionPreview'
+import ResourcePreview from 'components/guidance/ResourcePreview'
+import { capitalise } from 'lib/utils'
 
-
-const Details = ({ title, description, complexity, duration_in_minutes, resources, instructions, instructionIndex, setInstructionIndex }) => {
+const Details = ({ title, description, complexity, durationInMinutes, resources, instructions, instructionIndex, setInstructionIndex }) => {
   return (
     <div className='text-white w-full overflow-y-auto mb-4'>
       <img src={project} alt='project' className='mx-auto max-w-xl' />
@@ -17,7 +16,7 @@ const Details = ({ title, description, complexity, duration_in_minutes, resource
       <p className='mb-2'>{description}</p>
       <Badge variant={complexity}><FontAwesomeIcon icon={faUser} />&nbsp;Difficulty: {capitalise(complexity)}</Badge>
       &nbsp;
-      <Badge variant='secondary'><FontAwesomeIcon icon={faClock} />&nbsp;Estimated Time: {duration_in_minutes}min</Badge>
+      <Badge variant='secondary'><FontAwesomeIcon icon={faClock} />&nbsp;Estimated Time: {durationInMinutes}min</Badge>
 
       <h2 className='font-bold text-white text-2xl mb-2 mt-6'>Materials Needed</h2>
       <div className='grid gap-4'>
@@ -44,4 +43,4 @@ const Details = ({ title, description, complexity, duration_in_minutes, resource
   )
 }
 
-export default Details;
+export default Details

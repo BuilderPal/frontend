@@ -28,19 +28,25 @@ const recommendationChatSample =
     ]
   }]
 
-function Chat ({ recommendationChatId }) {
-  const [iterations, setIterations] = useState(null)
+function Chat ({ recommendationChatId, setCurrIterationIndex }) {
+  const [iterations, setIterations] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isAwaitingResponse, setIsAwaitingResponse] = useState(false)
+  const [currIterationIndex, setIterationIndex] = useState(0)
 
   // Derive from iterations
-  const currIteration = iterations?.[iterations.length - 1]
+  const currIteration = iterations.length ? iterations?.[iterations.length - 1] : null
   const breadcrumbs = iterations?.map(message => message.breadcrumb)
 
   // Retrieve iterations using API
   useEffect(() => {
     fetchRecommendationChat(recommendationChatId)
   }, [recommendationChatId])
+
+  useEffect(() => {
+    setCurrIterationIndex(currIterationIndex + 1)
+    setIterationIndex(i => i + 1)
+  }, [iterations])
 
   const navigateToIteration = (iterationIndex) => {
     setIterations((iterations) => {
@@ -108,8 +114,8 @@ function Chat ({ recommendationChatId }) {
   return (
     <div className="flex flex-col p-4 w-1/3 min-w-fit h-full bg-gray-200">
       {
-        isLoading || !iterations
-          ? <ClipLoader isLoading={isLoading || !iterations} />
+        isLoading || !iterations.length
+          ? <ClipLoader isLoading={isLoading || !iterations.length} />
           : (
             <>
               <div>

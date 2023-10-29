@@ -6,9 +6,11 @@ import { API } from '../../lib/utils'
 
 const Recommendation = () => {
   const [recommendationChatId, setRecommendationChatId] = useState(null)
+  const [currIterationIndex, setCurrIterationIndex] = useState(null)
   const fetchChatId = async () => {
     const { data: { chat_id: createdChatId } } = await API.createDiscoveryChat()
     setRecommendationChatId(createdChatId)
+    setCurrIterationIndex(0)
   }
   useEffect(() => {
     fetchChatId()
@@ -18,8 +20,8 @@ const Recommendation = () => {
       ? <ClipLoader isLoading={recommendationChatId == null} />
       : (
       <div className="flex h-screen">
-        <Chat recommendationChatId={recommendationChatId} />
-        <SearchResults recommendationChatId={recommendationChatId} />
+        <Chat recommendationChatId={recommendationChatId} setCurrIterationIndex={setCurrIterationIndex}/>
+        <SearchResults recommendationChatId={recommendationChatId} currIterationIndex={currIterationIndex}/>
       </div>
         )
   )

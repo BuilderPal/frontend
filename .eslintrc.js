@@ -25,9 +25,11 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: [
-    'react'
+    'react',
+    'only-warn'
   ],
   rules: {
-    'react/prop-types': 0
+    'react/prop-types': 0,
+    'prettier/prettier': 'warn'
   }
 }

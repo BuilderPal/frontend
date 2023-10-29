@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs'
 import { Separator } from 'components/ui/separator'
 import Details from './Details'
 import Instruction from './Instruction'
-import Chat from '../../components/chat/Chat'
+import Chat from '../../components/guidance/chat/Chat'
 import { API } from '../../lib/utils'
 import ClipLoader from 'react-spinners/ClipLoader'
 

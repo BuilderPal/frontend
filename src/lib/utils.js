@@ -77,12 +77,30 @@ class APIClass {
     return axios.get(this._constructUrl(`/api/projects/${projectId}`))
   }
 
+  getAllProjects () {
+    return axios.get(this._constructUrl('/api/projects'))
+  }
+
   updateProject (projectId, data) {
     return axios.put(this._constructUrl(`/api/projects/${projectId}`), data)
   }
 
   deleteProject (projectId) {
     return axios.delete(this._constructUrl(`/api/projects/${projectId}`))
+  }
+
+  // Discovery Chat related methods
+
+  createDiscoveryChat () {
+    return axios.post(this._constructUrl('/api/discovery_chats'))
+  }
+
+  getDiscoveryChat (id) {
+    return axios.get(this._constructUrl(`/api/discovery_chats/${id}`))
+  }
+
+  sendDiscoverageChatMessage (id, message) {
+    return axios.post(this._constructUrl(`/api/discovery_chats/${id}/messages`), { message })
   }
 }
 

@@ -3,8 +3,8 @@ import { Badge } from 'components/ui/badge'
 import { faClock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import project from 'assets/project/project-sample.png'
-import InstructionPreview from 'components/guidance/InstructionPreview'
-import ResourcePreview from 'components/guidance/ResourcePreview'
+import InstructionPreview from 'components/guidance/project/InstructionPreview'
+import ResourcePreview from 'components/guidance/project/ResourcePreview'
 import { capitalise } from 'lib/utils'
 
 const Details = ({ title, description, complexity, durationInMinutes, resources, instructions, instructionIndex, setInstructionIndex }) => {

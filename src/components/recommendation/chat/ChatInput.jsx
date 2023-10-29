@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Recorder from 'components/chat/Recorder'
+import Recorder from 'components/guidance/chat/Recorder'
 import { Button } from 'components/ui/button'
 import { Input } from 'components/ui/input'
 
@@ -11,25 +11,30 @@ export default function ChatInput ({ sendTextMessage, sendAudioMessage }) {
   const isAudioActive = isRecording || recordedBlob
   const sendMessage = async () => {
     setIsAwaitingResponse(true)
-    // Depending on audio or text, send the Text of Audio Message
-    if (recordedBlob) {
+
+    const message = currMessage
+    const blob = recordedBlob
+    setCurrMessage('')
+    setRecordedBlob(null)
+
+    if (blob) {
       await sendAudioMessage(recordedBlob)
     } else {
-      await sendTextMessage(currMessage)
+      await sendTextMessage(message)
     }
     setIsAwaitingResponse(false)
   }
   return (
-        <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+        <div className="border-t-2 border-gray-200 pt-4 mb-2 sm:mb-0">
             <div className="flex items-center transition-all duration-500 ease-in-out">
                 {/* Audio Component */}
-                <div className={`flex-shrink-0 ${isAudioActive ? 'flex-grow' : 'w-12'} m-1`}>
+                <div className={`flex-shrink-0 ${isAudioActive ? 'flex-grow' : 'w-8'} m-1`}>
                     <Recorder recordedBlob={recordedBlob} setRecordedBlob={setRecordedBlob} setIsRecording={setIsRecording} isRecording={isRecording} />
                 </div>
 
                 {/* Input Component */}
                 {!isAudioActive && (
-                    <div className="flex-grow p-4">
+                    <div className="flex-grow pl-1 pr-2">
                         <Input disabled={isAwaitingResponse} value={currMessage} onChange={(e) => { setCurrMessage(e.target.value) }} type="text" placeholder="Write your message!" />
                     </div>
                 )}

@@ -1,7 +1,7 @@
 import React from 'react'
-import InstructionParagraph from 'components/guidance/InstructionParagraph'
-import ImageCarousel from 'components/guidance/ImageCarousel'
-import InstructionPreview from '../../components/guidance/InstructionPreview'
+import InstructionParagraph from 'components/guidance/project/InstructionParagraph'
+import ImageCarousel from 'components/guidance/project/ImageCarousel'
+import InstructionPreview from '../../components/guidance/project/InstructionPreview'
 import { Button } from 'components/ui/button'
 
 const Instruction = ({ instructions, instructionIndex, setInstructionIndex }) => {

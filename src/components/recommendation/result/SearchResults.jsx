@@ -96,8 +96,11 @@ export default function ContentArea ({ recommendationChatId, currIterationIndex 
   const fetchDynamicSearchResults = async () => {
     setIsLoadingStatic(true)
     // TODO: add this once backend supports loading dynamic projects
-    // const { data: results } = await API.getAllDynamicProjects()
-    // setDynamicSearchResults(results)
+
+    // const { data: project } = await API.createDynamicProject(recommendationChatId)
+    // setDynamicSearchResults([project])
+
+    setDynamicSearchResults(searchResultSample)
     setIsLoadingStatic(false)
   }
   useEffect(() => {

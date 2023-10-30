@@ -89,6 +89,10 @@ class APIClass {
     return axios.delete(this._constructUrl(`/api/projects/${projectId}`))
   }
 
+  createDynamicProject (discoveryChatId) {
+    return axios.post(this._constructUrl(`/api/chats/dynamic/${discoveryChatId}`))
+  }
+
   // Discovery Chat related methods
 
   createDiscoveryChat () {

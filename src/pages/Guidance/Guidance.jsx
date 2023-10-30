@@ -7,6 +7,7 @@ import { API } from '../../lib/utils'
 import ClipLoader from 'react-spinners/ClipLoader'
 
 import React, { useState, useEffect } from 'react'
+import { useLoaderData, useParams } from 'react-router-dom'
 
 const templateUserProject = {
   title: 'Sample Project Title',
@@ -59,36 +60,12 @@ const templateUserProject = {
   ]
 }
 
-const Guidance = ({ userProjectId }) => {
-  const [userProject, setUserProject] = useState(templateUserProject)
+const Guidance = () => {
+  const { id } = useParams()
+  const userProjectLoaded = useLoaderData()
+  const [userProject, setUserProject] = useState(userProjectLoaded)
   const [instructionIndex, setInstructionIndex] = useState(0)
   const [isLoadingProject, setIsLoadingProject] = useState(false)
-  useEffect(() => {
-    API.getUserProject(userProjectId).then(response => {
-      const project = response.data
-      setUserProject(prevState => ({
-        ...prevState,
-        title: project.title,
-        duration_in_minutes: project.duration_in_minutes,
-        complexity: project.complexity,
-        resources: project.resources,
-        categories: project.categories,
-        description: project.description,
-        instructions: project.instructions.map(instruction => ({
-          instruction_index: instruction.instruction_index,
-          title: instruction.title,
-          body: instruction.content,
-          images: instruction.media_items
-            .filter(media => media.media_type === 'image')
-            .map(media => media.url)
-        }))
-      }), (_) => {
-        setIsLoadingProject(false)
-      })
-    }).catch(error => {
-      console.error('Error fetching user project:', error)
-    })
-  }, [])
 
   return (
     <div className='float'>
@@ -140,6 +117,27 @@ const Guidance = ({ userProjectId }) => {
       </aside>
     </div>
   )
+}
+
+export const userProjectLoader = async ({ params: { id } }) => {
+  const { data: project } = await API.getUserProject(id)
+  const userProject = {
+    title: project.title,
+    duration_in_minutes: project.duration_in_minutes,
+    complexity: project.complexity,
+    resources: project.resources,
+    categories: project.categories,
+    description: project.description,
+    instructions: project.instructions.map(instruction => ({
+      instruction_index: instruction.instruction_index,
+      title: instruction.title,
+      body: instruction.content,
+      images: instruction.media_items
+        .filter(media => media.media_type === 'image')
+        .map(media => media.url)
+    }))
+  }
+  return userProject
 }
 
 export default Guidance

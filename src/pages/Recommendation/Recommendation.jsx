@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Chat from '../../components/recommendation/chat/Chat'
 import SearchResults from '../../components/recommendation/result/SearchResults'
 import { ClipLoader } from 'react-spinners'
-import { API } from '../../lib/utils'
+import { useParams } from 'react-router-dom'
 
 const Recommendation = () => {
-  const [recommendationChatId, setRecommendationChatId] = useState(null)
-  const [currIterationIndex, setCurrIterationIndex] = useState(null)
-  const fetchChatId = async () => {
-    const { data: { chat_id: createdChatId } } = await API.createDiscoveryChat()
-    setRecommendationChatId(createdChatId)
-    setCurrIterationIndex(0)
-  }
-  useEffect(() => {
-    fetchChatId()
-  }, [])
+  const recommendationChatId = useParams()
+  const [currIterationIndex, setCurrIterationIndex] = useState(0)
   return (
     recommendationChatId == null
       ? <ClipLoader isLoading={recommendationChatId == null} />

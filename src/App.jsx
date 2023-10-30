@@ -10,13 +10,14 @@ import RecommendationBase, { recommendationChatIdLoader } from 'pages/Recommenda
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
-      <Route index element={RecommendationBase} loader={recommendationChatIdLoader}/>
+      <Route index element={<RecommendationBase />} loader={recommendationChatIdLoader}/>
       <Route path="/:id" element={<Recommendation/>}/>
       <Route path="/project/:id" element={<Project />} loader={userProjectIdLoader} />
       <Route path="/user_project/:id" element={<Guidance />} loader={userProjectLoader}/>
     </Route>
   )
 )
+
 const App = () => {
   return (
     <>

@@ -5,7 +5,7 @@ import { ClipLoader } from 'react-spinners'
 import { useParams } from 'react-router-dom'
 
 const Recommendation = () => {
-  const recommendationChatId = useParams()
+  const { id: recommendationChatId } = useParams()
   const [currIterationIndex, setCurrIterationIndex] = useState(0)
   return (
     recommendationChatId == null

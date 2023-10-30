@@ -8,6 +8,9 @@ export default function RecommendationBase () {
 }
 
 export const recommendationChatIdLoader = async () => {
-  const { data: { user_project_id: userProjectId } } = await API.createDiscoveryChat()
-  return userProjectId
+  const res = await API.createDiscoveryChat()
+  console.log(res.data.chat_id)
+  // const { data: { user_project_id: userProjectId } } = await API.createDiscoveryChat()
+  // console.log(userProjectId)
+  return res.data.chat_id
 }

@@ -40,6 +40,7 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
 
   // Retrieve iterations using API
   useEffect(() => {
+    console.log(recommendationChatId)
     fetchRecommendationChat(recommendationChatId)
   }, [recommendationChatId])
 

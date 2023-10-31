@@ -106,6 +106,10 @@ class APIClass {
   sendDiscoverageChatMessage (id, message) {
     return axios.post(this._constructUrl(`/api/discovery_chats/${id}/messages`), { message })
   }
+
+  getRecommendedStaticProjects (discoveryChatId, offset = 0, limit = 5) {
+    return axios.get(this._constructUrl(`/api/projects/recommended/${discoveryChatId}`), { params: { offset, limit } })
+  }
 }
 
 export const API = new APIClass()

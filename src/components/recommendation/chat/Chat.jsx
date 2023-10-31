@@ -5,6 +5,7 @@ import Question from './Question'
 import Suggestion from './Suggestion'
 import { ClipLoader } from 'react-spinners'
 import { API } from '../../../lib/utils'
+import { Button } from 'components/ui/button'
 
 const recommendationChatSample =
   [{
@@ -44,10 +45,7 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
     fetchRecommendationChat(recommendationChatId)
   }, [recommendationChatId])
 
-  useEffect(() => {
-    setCurrIterationIndex(currIterationIndex + 1)
-    setIterationIndex(i => i + 1)
-  }, [iterations])
+  useEffect(() => setCurrIterationIndex(currIterationIndex), [currIterationIndex])
 
   const navigateToIteration = (iterationIndex) => {
     setIterations((iterations) => {
@@ -57,6 +55,7 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
         return iterations.slice(0, iterationIndex + 1)
       }
     })
+    setIterationIndex(i => i + 1)
   }
 
   const sendTextMessage = async (message) => {
@@ -74,10 +73,11 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
       message
     }
     setIterations((iterations) => [...iterations, iteration])
+    setIterationIndex(i => i + 1)
     setIsAwaitingResponse(false)
   }
   const sendAudioMessage = (blob) => {
-
+    setIterationIndex(i => i + 1)
   }
   //   class AIMessage(BaseModel):
   //   role: str = Field(default="assistant")
@@ -119,6 +119,7 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
           ? <ClipLoader isLoading={isLoading || !iterations.length} />
           : (
             <>
+              <Button onClick={() => incrementIteration()}>Click me</Button>
               <div>
                 <div className="flex-0 h-30 mb-4">
                   <Breadcrumbs breadcrumbs={breadcrumbs} navigateToIteration={navigateToIteration} />

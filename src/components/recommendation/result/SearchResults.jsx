@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { API } from '../../../lib/utils'
 import { ClipLoader } from 'react-spinners'
 import { Link } from 'react-router-dom'
+import { Button } from 'components/ui/button'
+import { TrainFrontTunnel } from 'lucide-react'
 const searchResultSample = [
   {
     id: 'sample',
@@ -78,22 +80,31 @@ const searchResultSample = [
 ]
 
 export default function ContentArea ({ recommendationChatId, currIterationIndex }) {
-  const [staticSearchResults, setStaticSearchResults] = useState(searchResultSample)
-  const [dynamicSearchResults, setDynamicSearchResults] = useState(searchResultSample)
-
+  const [staticSearchResults, setStaticSearchResults] = useState([])
+  const [dynamicSearchResults, setDynamicSearchResults] = useState([])
+  const [totalResults, setTotalResults] = useState(null)
   const [isLoadingStatic, setIsLoadingStatic] = useState(true)
   const [isLoadingDynamic, setIsLoadingDynamic] = useState(true)
 
-  const fetchStaticSearchResults = async () => {
+  const fetchStaticSearchResults = async (toReplace) => {
     console.log('Fetching static search results')
+    if (!toReplace && totalResults != null && totalResults === staticSearchResults.length) {
+      return
+    }
     setIsLoadingStatic(true)
-    // TODO: Load only relevant search results, once backend supports this
-    const { data: results } = await API.getAllProjects()
-    setStaticSearchResults(results)
+    const { data: { data: results, total_count: totalResultsFetched } } = await API.getRecommendedStaticProjects(recommendationChatId, staticSearchResults.length)
+    setTotalResults(totalResultsFetched)
+    setStaticSearchResults((staticResults) => {
+      if (toReplace) {
+        return results
+      } else {
+        return [...staticResults, results]
+      }
+    })
     setIsLoadingStatic(false)
   }
 
-  const fetchDynamicSearchResults = async () => {
+  const fetchDynamicSearchResults = async (toReplace) => {
     setIsLoadingStatic(true)
     // TODO: add this once backend supports loading dynamic projects
 
@@ -104,8 +115,8 @@ export default function ContentArea ({ recommendationChatId, currIterationIndex 
     setIsLoadingStatic(false)
   }
   useEffect(() => {
-    fetchStaticSearchResults()
-    fetchDynamicSearchResults()
+    fetchStaticSearchResults(TrainFrontTunnel)
+    fetchDynamicSearchResults(TrainFrontTunnel)
   }, [recommendationChatId, currIterationIndex])
 
   return (
@@ -158,6 +169,7 @@ export default function ContentArea ({ recommendationChatId, currIterationIndex 
                   </Link>
                 ))
                 }
+                <Button onClick={() => fetchStaticSearchResults(false)}>Load More</Button>
               </div>)
         }
       </div>

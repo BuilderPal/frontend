@@ -98,21 +98,27 @@ export default function ContentArea ({ recommendationChatId, currIterationIndex 
       if (toReplace) {
         return results
       } else {
-        return [...staticResults, results]
+        return [...staticResults, ...results]
       }
     })
     setIsLoadingStatic(false)
   }
 
   const fetchDynamicSearchResults = async (toReplace) => {
-    setIsLoadingStatic(true)
+    setIsLoadingDynamic(true)
     // TODO: add this once backend supports loading dynamic projects
+    const { data: { projects: results } } = await API.getRecommendedDynamicProjects(recommendationChatId)
 
     // const { data: project } = await API.createDynamicProject(recommendationChatId)
     // setDynamicSearchResults([project])
-
-    setDynamicSearchResults(searchResultSample)
-    setIsLoadingStatic(false)
+    setDynamicSearchResults((currResults) => {
+      if (toReplace) {
+        return results
+      } else {
+        return [...currResults, results]
+      }
+    })
+    setIsLoadingDynamic(false)
   }
   useEffect(() => {
     fetchStaticSearchResults(TrainFrontTunnel)
@@ -125,7 +131,7 @@ export default function ContentArea ({ recommendationChatId, currIterationIndex 
         <div className='text-2xl font-semi-bold tracking-tight mb-2'>See what BuilderPal came up with</div>
         <div className="flex flex-row overflow-x-auto">
           {
-            isLoadingStatic
+            isLoadingDynamic
               ? <ClipLoader isLoading={isLoadingStatic} />
               : (
                 <>
@@ -139,6 +145,7 @@ export default function ContentArea ({ recommendationChatId, currIterationIndex 
                     </Link>
                   ))
                   }
+                  <Button onClick={() => fetchDynamicSearchResults(false)}>Load More +</Button>
                 </>
                 )}
         </div>
@@ -169,7 +176,7 @@ export default function ContentArea ({ recommendationChatId, currIterationIndex 
                   </Link>
                 ))
                 }
-                <Button onClick={() => fetchStaticSearchResults(false)}>Load More</Button>
+                {totalResults && totalResults > staticSearchResults.length && <Button onClick={() => fetchStaticSearchResults(false)}>Load More +</Button>}
               </div>)
         }
       </div>

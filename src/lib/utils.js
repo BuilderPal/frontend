@@ -110,6 +110,10 @@ class APIClass {
   getRecommendedStaticProjects (discoveryChatId, offset = 0, limit = 5) {
     return axios.get(this._constructUrl(`/api/projects/recommended/${discoveryChatId}`), { params: { offset, limit } })
   }
+
+  getRecommendedDynamicProjects (discoveryChatId, count = 4) {
+    return axios.post(this._constructUrl('/api/projects/dynamic/metadata'), { chat_id: discoveryChatId, count })
+  }
 }
 
 export const API = new APIClass()

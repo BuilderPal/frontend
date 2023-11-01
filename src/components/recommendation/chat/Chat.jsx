@@ -6,6 +6,7 @@ import Suggestion from './Suggestion'
 import { ClipLoader } from 'react-spinners'
 import { API } from '../../../lib/utils'
 import { Button } from 'components/ui/button'
+import { useNavigate } from 'react-router-dom'
 
 const recommendationChatSample =
   [{
@@ -46,16 +47,11 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
   }, [recommendationChatId])
 
   useEffect(() => setCurrIterationIndex(currIterationIndex), [currIterationIndex])
+  const navigate = useNavigate()
 
-  const navigateToIteration = (iterationIndex) => {
-    setIterations((iterations) => {
-      if (!iterations || iterationIndex >= iterations.length) {
-        return iterations
-      } else {
-        return iterations.slice(0, iterationIndex + 1)
-      }
-    })
-    setIterationIndex(i => i + 1)
+  const navigateToIteration = async (iterationIndex) => {
+    const { data: { chat_id: newRecommendationChatId } } = await API.navigateToBreadcrumb(recommendationChatId, iterations[iterationIndex].breadcrumb)
+    navigate(`/${newRecommendationChatId}`)
   }
 
   const sendTextMessage = async (message) => {
@@ -119,7 +115,6 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
           ? <ClipLoader isLoading={isLoading || !iterations.length} />
           : (
             <>
-              <Button onClick={() => incrementIteration()}>Click me</Button>
               <div>
                 <div className="flex-0 h-30 mb-4">
                   <Breadcrumbs breadcrumbs={breadcrumbs} navigateToIteration={navigateToIteration} />

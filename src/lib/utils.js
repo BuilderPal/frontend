@@ -40,6 +40,10 @@ class APIClass {
     return axios.post(this._constructUrl(`/api/user_projects/${projectId}`), data)
   }
 
+  createDynamicUserProject (projectId) {
+    return axios.post(this._constructUrl(`/api/user_projects/dynamic/${projectId}`))
+  }
+
   // Chats related methods
 
   getAllChats () {
@@ -113,6 +117,14 @@ class APIClass {
 
   getRecommendedDynamicProjects (discoveryChatId, count = 4) {
     return axios.post(this._constructUrl('/api/projects/dynamic/metadata'), { chat_id: discoveryChatId, count })
+  }
+
+  getFilledDynamicProject (dynamicProjectMetadata) {
+    return axios.post(this._constructUrl('/api/projects/dynamic'), { ...dynamicProjectMetadata })
+  }
+
+  navigateToBreadcrumb (discoveryChatId, breadcrumbTitle) {
+    return axios.post(this._constructUrl(`/api/discovery_chats/${discoveryChatId}`), { section_title: breadcrumbTitle })
   }
 }
 

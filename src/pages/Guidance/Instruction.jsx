@@ -22,9 +22,11 @@ const Instruction = ({ instructions, instructionIndex, setInstructionIndex }) =>
       {instruction.body.map((paragraph, i) =>
         <InstructionParagraph key={i} paragraph={paragraph}/>
       )}
-
-      <h2 className='text-2xl my-auto font-bold mb-2 mt-6'>Images</h2>
+      {instruction.images.length > 0 && <>
+        <h2 className='text-2xl my-auto font-bold mb-2 mt-6'>Images</h2>
       <ImageCarousel images={instruction.images}/>
+      </>}
+
     </div>
   )
 }

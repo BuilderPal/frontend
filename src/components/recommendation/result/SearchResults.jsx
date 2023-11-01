@@ -115,7 +115,7 @@ export default function ContentArea ({ recommendationChatId, currIterationIndex 
       if (toReplace) {
         return results
       } else {
-        return [...currResults, results]
+        return [...currResults, ...results]
       }
     })
     setIsLoadingDynamic(false)
@@ -136,10 +136,10 @@ export default function ContentArea ({ recommendationChatId, currIterationIndex 
               : (
                 <>
                   {dynamicSearchResults.map((result, index) => (
-                    <Link to={`project/${result._id}`} key={index}>
+                    <Link to={'/project/dynamic'} state={result} key={index}>
                       <div className="flex flex-col space-x-2 p-2 rounded-xl h-72 w-60">
                         <div className="mx-2 mt-2 text-xl font-semibold text-ellipsis">{result.title}</div>
-                        <div className="mx-2 text-base text-gray-600">{result.complexity} • {result.views} views</div>
+                        <div className="mx-2 text-base text-gray-600">{result.complexity}</div>
                         <div className="flex-1 mx-2 mt-2 text-base leading-snug text-ellipsis text-gray-600">{result.description}</div>
                       </div>
                     </Link>
@@ -169,7 +169,7 @@ export default function ContentArea ({ recommendationChatId, currIterationIndex 
                       </div>
                       <div className='max-h-52'>
                         <div className="mx-2 mt-2 text-xl font-semibold text-ellipsis">{result.title}</div>
-                        <div className="mx-2 text-base text-gray-600">{result.complexity} • {result.views} views</div>
+                        <div className="mx-2 text-base text-gray-600">{result.complexity}</div>
                         <div className="mx-2 mt-1 text-base leading-snug text-ellipsis text-gray-600">{result.description}</div>
                       </div>
                     </div>

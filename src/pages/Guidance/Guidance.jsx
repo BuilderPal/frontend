@@ -7,7 +7,8 @@ import { API } from '../../lib/utils'
 import ClipLoader from 'react-spinners/ClipLoader'
 
 import React, { useState, useEffect } from 'react'
-import { useLoaderData, useParams } from 'react-router-dom'
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
+import { Button } from 'components/ui/button'
 
 const templateUserProject = {
   title: 'Sample Project Title',
@@ -66,10 +67,10 @@ const Guidance = () => {
   const [userProject, setUserProject] = useState(userProjectLoaded)
   const [instructionIndex, setInstructionIndex] = useState(0)
   const [isLoadingProject, setIsLoadingProject] = useState(false)
-
+  const navigate = useNavigate()
   return (
     <div className='float'>
-      <main className='w-2/3 bg-nusb float-left'>
+      <main className='w-full bg-nusb float-left'>
         <Tabs defaultValue='details' className='h-screen p-4'>
           <menu className='grid content-center h-[10%]'>
             <div className='flex place-content-between'>
@@ -93,6 +94,7 @@ const Guidance = () => {
                 : (
                   <>
                     <TabsContent value="details">
+                      <Button onClick={() => navigate('/')} > Go Back </Button>
                       <Details
                         {...userProject}
                         instructionIndex={instructionIndex}
@@ -112,9 +114,9 @@ const Guidance = () => {
           </section>
         </Tabs>
       </main>
-      <aside className='h-screen w-1/3 float-left'>
+      {/* <aside className='h-screen w-1/3 float-left'>
         <Chat />
-      </aside>
+      </aside> */}
     </div>
   )
 }

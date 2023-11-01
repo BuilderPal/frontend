@@ -2,11 +2,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs'
 import { Separator } from 'components/ui/separator'
 import Details from './Details'
 import Instruction from './Instruction'
-import Chat from '../../components/chat/Chat'
+import Chat from '../../components/guidance/chat/Chat'
 import { API } from '../../lib/utils'
 import ClipLoader from 'react-spinners/ClipLoader'
 
 import React, { useState, useEffect } from 'react'
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
+import { Button } from 'components/ui/button'
 
 const templateUserProject = {
   title: 'Sample Project Title',
@@ -59,40 +61,16 @@ const templateUserProject = {
   ]
 }
 
-const Guidance = ({ userProjectId }) => {
-  const [userProject, setUserProject] = useState(templateUserProject)
+const Guidance = () => {
+  const { id } = useParams()
+  const userProjectLoaded = useLoaderData()
+  const [userProject, setUserProject] = useState(userProjectLoaded)
   const [instructionIndex, setInstructionIndex] = useState(0)
   const [isLoadingProject, setIsLoadingProject] = useState(false)
-  useEffect(() => {
-    API.getUserProject(userProjectId).then(response => {
-      const project = response.data
-      setUserProject(prevState => ({
-        ...prevState,
-        title: project.title,
-        duration_in_minutes: project.duration_in_minutes,
-        complexity: project.complexity,
-        resources: project.resources,
-        categories: project.categories,
-        description: project.description,
-        instructions: project.instructions.map(instruction => ({
-          instruction_index: instruction.instruction_index,
-          title: instruction.title,
-          body: instruction.content,
-          images: instruction.media_items
-            .filter(media => media.media_type === 'image')
-            .map(media => media.url)
-        }))
-      }), (_) => {
-        setIsLoadingProject(false)
-      })
-    }).catch(error => {
-      console.error('Error fetching user project:', error)
-    })
-  }, [])
-
+  const navigate = useNavigate()
   return (
     <div className='float'>
-      <main className='w-2/3 bg-nusb float-left'>
+      <main className='w-full bg-nusb float-left'>
         <Tabs defaultValue='details' className='h-screen p-4'>
           <menu className='grid content-center h-[10%]'>
             <div className='flex place-content-between'>
@@ -116,6 +94,7 @@ const Guidance = ({ userProjectId }) => {
                 : (
                   <>
                     <TabsContent value="details">
+                      <Button onClick={() => navigate('/')} > Go Back </Button>
                       <Details
                         {...userProject}
                         instructionIndex={instructionIndex}
@@ -135,11 +114,32 @@ const Guidance = ({ userProjectId }) => {
           </section>
         </Tabs>
       </main>
-      <aside className='h-screen w-1/3 float-left'>
+      {/* <aside className='h-screen w-1/3 float-left'>
         <Chat />
-      </aside>
+      </aside> */}
     </div>
   )
+}
+
+export const userProjectLoader = async ({ params: { id } }) => {
+  const { data: project } = await API.getUserProject(id)
+  const userProject = {
+    title: project.title,
+    duration_in_minutes: project.duration_in_minutes,
+    complexity: project.complexity,
+    resources: project.resources,
+    categories: project.categories,
+    description: project.description,
+    instructions: project.instructions.map(instruction => ({
+      instruction_index: instruction.instruction_index,
+      title: instruction.title,
+      body: instruction.content,
+      images: instruction.media_items
+        .filter(media => media.media_type === 'image')
+        .map(media => media.url)
+    }))
+  }
+  return userProject
 }
 
 export default Guidance

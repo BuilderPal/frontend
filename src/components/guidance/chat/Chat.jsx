@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ChatMessage from './ChatMessage'
-import { API } from '../../lib/utils'
+import { API } from '../../../lib/utils'
 import Recorder from './Recorder'
 import { Button } from 'components/ui/button'
 import { Input } from 'components/ui/input'
@@ -90,7 +90,8 @@ const Chat = ({ chatId }) => {
       setRecordedBlob(null)
       setIsRecording(false)
 
-      queryResponse = await API.chatbotAudioQueryHandler(chatId, formData)
+      const { data } = await API.chatbotAudioQueryHandler(chatId, formData)
+      queryResponse = data
       // queryResponse = {
       //     responseText: "Give me a moment to respond",
       //     emote: "Happy",
@@ -109,8 +110,8 @@ const Chat = ({ chatId }) => {
 
       // await timeout(5000)
       // Send currMessage to backend await for response
-      queryResponse = await API.chatbotQueryHandler(chatId, { query })
-
+      const { data } = await API.chatbotQueryHandler(chatId, { query })
+      queryResponse = data
       // const { responseText, emote, is_project_modified, created_at } = await API.chatbotQueryHandler(chatId, {
       //     query: currMessage
       // })

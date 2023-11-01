@@ -1,7 +1,7 @@
 import React from 'react'
-import InstructionParagraph from 'components/guidance/InstructionParagraph'
-import ImageCarousel from 'components/guidance/ImageCarousel'
-import InstructionPreview from '../../components/guidance/InstructionPreview'
+import InstructionParagraph from 'components/guidance/project/InstructionParagraph'
+import ImageCarousel from 'components/guidance/project/ImageCarousel'
+import InstructionPreview from '../../components/guidance/project/InstructionPreview'
 import { Button } from 'components/ui/button'
 
 const Instruction = ({ instructions, instructionIndex, setInstructionIndex }) => {
@@ -22,9 +22,11 @@ const Instruction = ({ instructions, instructionIndex, setInstructionIndex }) =>
       {instruction.body.map((paragraph, i) =>
         <InstructionParagraph key={i} paragraph={paragraph}/>
       )}
-
-      <h2 className='text-2xl my-auto font-bold mb-2 mt-6'>Images</h2>
+      {instruction.images.length > 0 && <>
+        <h2 className='text-2xl my-auto font-bold mb-2 mt-6'>Images</h2>
       <ImageCarousel images={instruction.images}/>
+      </>}
+
     </div>
   )
 }

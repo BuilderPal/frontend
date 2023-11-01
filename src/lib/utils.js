@@ -40,6 +40,10 @@ class APIClass {
     return axios.post(this._constructUrl(`/api/user_projects/${projectId}`), data)
   }
 
+  createDynamicUserProject (projectId) {
+    return axios.post(this._constructUrl(`/api/user_projects/dynamic/${projectId}`))
+  }
+
   // Chats related methods
 
   getAllChats () {
@@ -77,12 +81,50 @@ class APIClass {
     return axios.get(this._constructUrl(`/api/projects/${projectId}`))
   }
 
+  getAllProjects () {
+    return axios.get(this._constructUrl('/api/projects'))
+  }
+
   updateProject (projectId, data) {
     return axios.put(this._constructUrl(`/api/projects/${projectId}`), data)
   }
 
   deleteProject (projectId) {
     return axios.delete(this._constructUrl(`/api/projects/${projectId}`))
+  }
+
+  createDynamicProject (discoveryChatId) {
+    return axios.post(this._constructUrl(`/api/chats/dynamic/${discoveryChatId}`))
+  }
+
+  // Discovery Chat related methods
+
+  createDiscoveryChat () {
+    return axios.post(this._constructUrl('/api/discovery_chats'))
+  }
+
+  getDiscoveryChat (id) {
+    return axios.get(this._constructUrl(`/api/discovery_chats/${id}`))
+  }
+
+  sendDiscoverageChatMessage (id, message) {
+    return axios.post(this._constructUrl(`/api/discovery_chats/${id}/messages`), { message })
+  }
+
+  getRecommendedStaticProjects (discoveryChatId, offset = 0, limit = 5) {
+    return axios.get(this._constructUrl(`/api/projects/recommended/${discoveryChatId}`), { params: { offset, limit } })
+  }
+
+  getRecommendedDynamicProjects (discoveryChatId, count = 4) {
+    return axios.post(this._constructUrl('/api/projects/dynamic/metadata'), { chat_id: discoveryChatId, count })
+  }
+
+  getFilledDynamicProject (dynamicProjectMetadata) {
+    return axios.post(this._constructUrl('/api/projects/dynamic'), { ...dynamicProjectMetadata })
+  }
+
+  navigateToBreadcrumb (discoveryChatId, breadcrumbTitle) {
+    return axios.post(this._constructUrl(`/api/discovery_chats/${discoveryChatId}`), { section_title: breadcrumbTitle })
   }
 }
 

@@ -13,7 +13,7 @@ const router = createBrowserRouter(
     <Route path="/">
       <Route index element={<RecommendationBase />} loader={recommendationChatIdLoader}/>
       <Route path="/:id" element={<Recommendation/>}/>
-      <Route path="/project/dynamic" element={<DynamicProject />} />
+      <Route path="/project/dynamic/:id" element={<DynamicProject />} />
       <Route path="/project/:id" element={<Project />} loader={userProjectIdLoader} />
       <Route path="/user_project/:id" element={<Guidance />} loader={userProjectLoader}/>
     </Route>

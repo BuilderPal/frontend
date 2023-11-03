@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { API } from '../../../lib/utils'
 import { ClipLoader } from 'react-spinners'
 import { Link } from 'react-router-dom'
 import { Button } from 'components/ui/button'
-import { TrainFrontTunnel } from 'lucide-react'
 const searchResultSample = [
   {
     id: 'sample',
@@ -79,106 +78,138 @@ const searchResultSample = [
   }
 ]
 
-export default function ContentArea ({ recommendationChatId, currIterationIndex }) {
+const MAX_DYNAMIC_RESULTS = 10
+const LIMIT = 5
+
+export default function ContentArea({ recommendationChatId, currIterationIndex }) {
   const [staticSearchResults, setStaticSearchResults] = useState([])
   const [dynamicSearchResults, setDynamicSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(null)
   const [isLoadingStatic, setIsLoadingStatic] = useState(true)
   const [isLoadingDynamic, setIsLoadingDynamic] = useState(true)
+  const isMount = useRef(true)
+  useEffect(() => {
+    isMount.current = true
+    fetchStaticSearchResults(true, recommendationChatId, currIterationIndex, 0, LIMIT)
+    if (currIterationIndex > 0) {
+      fetchDynamicSearchResults(true, recommendationChatId, currIterationIndex, 0, LIMIT)
+    }
+    return () => { isMount.current = false }
+  }, [recommendationChatId, currIterationIndex])
 
-  const fetchStaticSearchResults = async (toReplace) => {
+  const fetchStaticSearchResults = async (toReplace, queryRecommendationChatId, queryIterationIndex, offset, limit) => {
     console.log('Fetching static search results')
+    if (!isMount.current) {
+      return
+    }
     if (!toReplace && totalResults != null && totalResults === staticSearchResults.length) {
       return
     }
+    if (recommendationChatId !== queryRecommendationChatId || currIterationIndex !== queryIterationIndex || queryIterationIndex < 0) {
+      return
+    }
     setIsLoadingStatic(true)
-    const { data: { data: results, total_count: totalResultsFetched } } = await API.getRecommendedStaticProjects(recommendationChatId, staticSearchResults.length)
-    setTotalResults(totalResultsFetched)
-    setStaticSearchResults((staticResults) => {
-      if (toReplace) {
-        return results
-      } else {
-        return [...staticResults, ...results]
-      }
-    })
-    setIsLoadingStatic(false)
+    const { data: { is_section_registered: isReady, projects: resultsFetched, total_count: totalCountFetched } } = await API.getRecommendedStaticProjects(recommendationChatId, queryIterationIndex, offset, limit)
+
+    if (isReady) {
+      setStaticSearchResults((prevResults) => {
+        if (recommendationChatId !== queryRecommendationChatId || queryIterationIndex < 0) {
+          return prevResults
+        }
+        if (toReplace) {
+          return resultsFetched
+        } else {
+          return [...prevResults.slice(0, offset), ...resultsFetched]
+        }
+      })
+      setTotalResults(totalCountFetched)
+      setIsLoadingStatic(false)
+    } else {
+      setTimeout(() => fetchStaticSearchResults(toReplace, queryRecommendationChatId, queryIterationIndex, offset, limit), 2000)
+    }
   }
 
-  const fetchDynamicSearchResults = async (toReplace) => {
+  const fetchDynamicSearchResults = async (toReplace, queryRecommendationChatId, queryIterationIndex, offset, limit) => {
+    console.log('Fetching static search results')
+    if (!isMount.current) {
+      return
+    }
+    if (!toReplace && totalResults != null && totalResults === dynamicSearchResults.length) {
+      return
+    }
+    if (recommendationChatId !== queryRecommendationChatId || currIterationIndex !== queryIterationIndex || queryIterationIndex < 0) {
+      return
+    }
     setIsLoadingDynamic(true)
-    // TODO: add this once backend supports loading dynamic projects
-    const { data: { projects: results } } = await API.getRecommendedDynamicProjects(recommendationChatId)
+    const { data: { is_section_registered: isReady, projects: resultsFetched } } = await API.getRecommendedDynamicProjects(recommendationChatId, queryIterationIndex, offset, limit)
 
-    // const { data: project } = await API.createDynamicProject(recommendationChatId)
-    // setDynamicSearchResults([project])
-    setDynamicSearchResults((currResults) => {
-      if (toReplace) {
-        return results
-      } else {
-        return [...currResults, ...results]
-      }
-    })
-    setIsLoadingDynamic(false)
+    if (isReady) {
+      setDynamicSearchResults((prevResults) => {
+        if (recommendationChatId !== queryRecommendationChatId || queryIterationIndex < 0) {
+          return prevResults
+        }
+        if (toReplace) {
+          return resultsFetched
+        } else {
+          return [...prevResults.slice(0, offset), ...resultsFetched]
+        }
+      })
+      setIsLoadingDynamic(false)
+    } else {
+      setTimeout(() => fetchDynamicSearchResults(toReplace, queryRecommendationChatId, queryIterationIndex, offset, limit), 2000)
+    }
   }
-  useEffect(() => {
-    fetchStaticSearchResults(TrainFrontTunnel)
-    fetchDynamicSearchResults(TrainFrontTunnel)
-  }, [recommendationChatId, currIterationIndex])
 
   return (
     <div className="flex flex-col p-4 w-2/3 overflow-y-auto">
-      <div className="mb-4">
+      {currIterationIndex > 0 && (<div className="mb-4">
         <div className='text-2xl font-semi-bold tracking-tight mb-2'>See what BuilderPal came up with</div>
         <div className="flex flex-row overflow-x-auto">
-          {
-            isLoadingDynamic
-              ? <ClipLoader isLoading={isLoadingStatic} />
-              : (
-                <>
-                  {dynamicSearchResults.map((result, index) => (
-                    <Link to={'/project/dynamic'} state={result} key={index}>
-                      <div className="flex flex-col space-x-2 p-2 rounded-xl h-72 w-60">
-                        <div className="mx-2 mt-2 text-xl font-semibold text-ellipsis">{result.title}</div>
-                        <div className="mx-2 text-base text-gray-600">{result.complexity}</div>
-                        <div className="flex-1 mx-2 mt-2 text-base leading-snug text-ellipsis text-gray-600">{result.description}</div>
-                      </div>
-                    </Link>
-                  ))
-                  }
-                  <Button onClick={() => fetchDynamicSearchResults(false)}>Load More +</Button>
-                </>
-                )}
+          <>
+            {dynamicSearchResults.map((result, index) => (
+              <Link to={`/project/dynamic/${result._id}`} key={index}>
+                <div className="flex flex-col space-x-2 p-2 rounded-xl h-72 w-60">
+                  <div className="mx-2 mt-2 text-xl font-semibold text-ellipsis">{result.title}</div>
+                  <div className="mx-2 text-base text-gray-600">{result.complexity}</div>
+                  <div className="flex-1 mx-2 mt-2 text-base leading-snug text-ellipsis text-gray-600">{result.description}</div>
+                </div>
+              </Link>
+            ))
+            }
+            {
+              isLoadingDynamic
+                ? <ClipLoader isLoading={isLoadingDynamic} />
+                : (dynamicSearchResults.length < MAX_DYNAMIC_RESULTS && (<Button onClick={() => fetchDynamicSearchResults(false, recommendationChatId, currIterationIndex, dynamicSearchResults.length, LIMIT)}>Load More +</Button>))}
+          </>
         </div>
         {/* Add "...or try out one of BuilderPal's suggestions!" text here */}
-      </div>
+      </div>)}
       <div>
         <div className='text-2xl font-semi-bold tracking-tight mb-2'>...or try out one of BuilderPal's suggestions!</div>
-        {
-          isLoadingStatic
-            ? <ClipLoader isLoading={isLoadingStatic} />
-            : (
-              <div className="flex flex-col space-y-1">
-                {staticSearchResults.map((result, index) => (
-                  <Link to={`/project/${result._id}`} key={index}>
-                    <div className="flex space-x-2 p-2 rounded-xl">
-                      <div className='flex-shrink-0 h-52 w-80 relative bgslate-300'>
-                        <img src={result.image} className='w-full h-full object-cover rounded-xl' />
-                        <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded">
-                          {result.duration_in_minutes} min
-                        </div>
-                      </div>
-                      <div className='max-h-52'>
-                        <div className="mx-2 mt-2 text-xl font-semibold text-ellipsis">{result.title}</div>
-                        <div className="mx-2 text-base text-gray-600">{result.complexity}</div>
-                        <div className="mx-2 mt-1 text-base leading-snug text-ellipsis text-gray-600">{result.description}</div>
-                      </div>
-                    </div>
-                  </Link>
-                ))
-                }
-                {totalResults && totalResults > staticSearchResults.length && <Button onClick={() => fetchStaticSearchResults(false)}>Load More +</Button>}
-              </div>)
-        }
+        <div className="flex flex-col space-y-1">
+          {staticSearchResults.map((result, index) => (
+            <Link to={`/project/${result._id}`} key={index}>
+              <div className="flex space-x-2 p-2 rounded-xl">
+                <div className='flex-shrink-0 h-52 w-80 relative bgslate-300'>
+                  <img src={result.image} className='w-full h-full object-cover rounded-xl' />
+                  <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded">
+                    {result.duration_in_minutes} min
+                  </div>
+                </div>
+                <div className='max-h-52'>
+                  <div className="mx-2 mt-2 text-xl font-semibold text-ellipsis">{result.title}</div>
+                  <div className="mx-2 text-base text-gray-600">{result.complexity}</div>
+                  <div className="mx-2 mt-1 text-base leading-snug text-ellipsis text-gray-600">{result.description}</div>
+                </div>
+              </div>
+            </Link>
+          ))
+          }
+          {
+            isLoadingStatic
+              ? <ClipLoader isLoading={isLoadingStatic} />
+              : (totalResults && totalResults > staticSearchResults.length && <Button onClick={() => fetchStaticSearchResults(false, recommendationChatId, currIterationIndex, staticSearchResults.length, LIMIT)}>Load More +</Button>)}
+        </div>
       </div>
     </div>
   )

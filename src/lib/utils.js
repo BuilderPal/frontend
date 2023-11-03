@@ -111,20 +111,24 @@ class APIClass {
     return axios.post(this._constructUrl(`/api/discovery_chats/${id}/messages`), { message })
   }
 
-  getRecommendedStaticProjects (discoveryChatId, offset = 0, limit = 5) {
-    return axios.get(this._constructUrl(`/api/projects/recommended/${discoveryChatId}`), { params: { offset, limit } })
+  getRecommendedStaticProjects (discoveryChatId, iterationIndex, offset = 0, limit = 5) {
+    return axios.get(this._constructUrl('/api/projects/recommended/static'), { params: { chat_id: discoveryChatId, section_index: iterationIndex, offset, limit } })
   }
 
-  getRecommendedDynamicProjects (discoveryChatId, count = 4) {
-    return axios.post(this._constructUrl('/api/projects/dynamic/metadata'), { chat_id: discoveryChatId, count })
+  getRecommendedDynamicProjects (discoveryChatId, iterationIndex, offset = 0, limit = 5) {
+    return axios.get(this._constructUrl('/api/projects/recommended/dynamic'), { params: { chat_id: discoveryChatId, section_index: iterationIndex, offset, limit } })
   }
 
-  getFilledDynamicProject (dynamicProjectMetadata) {
-    return axios.post(this._constructUrl('/api/projects/dynamic'), { ...dynamicProjectMetadata })
+  getFilledDynamicProject (metadataId) {
+    return axios.post(this._constructUrl(`/api/projects/dynamic/${metadataId}`))
   }
 
-  navigateToBreadcrumb (discoveryChatId, breadcrumbTitle) {
-    return axios.post(this._constructUrl(`/api/discovery_chats/${discoveryChatId}`), { section_title: breadcrumbTitle })
+  navigateToBreadcrumb (discoveryChatId, iterationIndex) {
+    return axios.post(this._constructUrl(`/api/discovery_chats/${discoveryChatId}/sections/${iterationIndex}`))
+  }
+
+  getDiscoveryChatSuggestionsAndBreadCrumb (discoveryChatId, iterationIndex) {
+    return axios.get(this._constructUrl(`/api/discovery_chats/${discoveryChatId}/suggestions_breadcrumbs/${iterationIndex}`))
   }
 }
 

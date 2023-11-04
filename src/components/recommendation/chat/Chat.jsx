@@ -44,6 +44,8 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
     setIterationsLength(iterations.length)
   }, [iterations])
   useEffect(() => {
+    console.log('Iteration length changed', iterationsLength)
+    console.log('Iterations', iterations)
     setCurrIterationIndex(iterationsLength - 1)
   }, [iterationsLength])
   // Derive from iterations
@@ -60,29 +62,8 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
   const navigate = useNavigate()
 
   const navigateToIteration = async (iterationIndex) => {
-    const { data: { chat_id: newRecommendationChatId } } = await API.navigateToBreadcrumb(recommendationChatId, iterations[iterationIndex].breadcrumb)
+    const { data: { chat_id: newRecommendationChatId } } = await API.navigateToBreadcrumb(recommendationChatId, iterationIndex)
     navigate(`/${newRecommendationChatId}`)
-  }
-
-  // const sendTextMessage = async (message) => {
-  //   setIsAwaitingResponse(true)
-  //   const {
-  //     data: {
-  //       text: response, breadcrumb_title: breadcrumb, user_options: suggestions
-  //     }
-  //   } = await API.sendDiscoverageChatMessage(recommendationChatId, message)
-  //   const iteration = {
-  //     response,
-  //     breadcrumb,
-  //     suggestions,
-  //     message
-  //   }
-  //   setIterations((iterations) => [...iterations, iteration])
-  //   setIterationIndex(i => i + 1)
-  //   setIsAwaitingResponse(false)
-  // }
-  const sendAudioMessage = (blob) => {
-    // setIterationIndex(i => i + 1)
   }
 
   const updateIteration = (iterationIndex, field, modifier) => {
@@ -124,18 +105,44 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
         body: JSON.stringify({ message })
       })
       const reader = response.body.getReader()
+      handleResponseStream(reader, iterationIndex + 1)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
 
+  const fetchAIResponseAudioMessage = async (blob) => {
+    try {
+      const iterationIndex = iterations.length - 1
+      setIterations(prevIterations => [...prevIterations, { response: '', breadcrumb: '...', suggestions: [], message: '' }])
+
+      const formData = new FormData()
+      formData.append('chat_id', recommendationChatId)
+      formData.append('audio', blob)
+      const response = await fetch(API._constructUrl(`/api/discovery_chats/${recommendationChatId}/speech/${iterationIndex}`), {
+        method: 'POST',
+        body: formData
+      })
+      const reader = response.body.getReader()
+      handleResponseStream(reader, iterationIndex + 1)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+
+  const handleResponseStream = (stream, iterationIndex) => {
+    try {
       const decoder = new TextDecoder()
 
-      reader.read().then(function processText ({ done, value }) {
+      stream.read().then(function processText ({ done, value }) {
         if (done) {
           return
         }
         const responseText = decoder.decode(value)
 
-        updateIteration(iterationIndex + 1, 'response', (prevResponse) => (prevResponse ?? '') + responseText)
+        updateIteration(iterationIndex, 'response', (prevResponse) => (prevResponse ?? '') + responseText)
 
-        return reader.read().then(processText)
+        return stream.read().then(processText)
       })
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -177,7 +184,7 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
                   ))}
                 </div>
                 <div className="flex-0 h-30 mb-3">
-                  <ChatInput sendTextMessage={fetchAIResponse} sendAudioMessage={sendAudioMessage} />
+                  <ChatInput sendTextMessage={fetchAIResponse} sendAudioMessage={fetchAIResponseAudioMessage} />
                 </div>
               </div>
             </>

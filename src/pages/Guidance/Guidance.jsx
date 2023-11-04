@@ -5,6 +5,7 @@ import Instruction from './Instruction'
 import Chat from '../../components/guidance/chat/Chat'
 import { API } from '../../lib/utils'
 import ClipLoader from 'react-spinners/ClipLoader'
+import { BiArrowBack } from 'react-icons/bi'
 
 import React, { useState, useEffect } from 'react'
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
@@ -68,13 +69,16 @@ const Guidance = () => {
   const [instructionIndex, setInstructionIndex] = useState(0)
   const [isLoadingProject, setIsLoadingProject] = useState(false)
   const navigate = useNavigate()
+  console.log(userProject)
   return (
-    <div className='float'>
-      <main className='w-full bg-nusb float-left'>
-        <Tabs defaultValue='details' className='h-screen p-4'>
-          <menu className='grid content-center h-[10%]'>
+      <main className='w-full h-full'>
+        <Tabs defaultValue='details' className='p-4 h-full'>
+          <menu className='grid content-center'>
             <div className='flex place-content-between'>
-              <h1 className='text-4xl text-white'>BuilderPal</h1>
+              <>
+              <Button onClick={() => navigate(-2)}><BiArrowBack/></Button>
+              <h1 className='text-4xl'>BuilderPal</h1>
+              </>
               <TabsList className='w-fit object-right'>
                 <TabsTrigger value="details">Project Details</TabsTrigger>
                 <TabsTrigger value="instructions">Instructions</TabsTrigger>
@@ -94,7 +98,6 @@ const Guidance = () => {
                 : (
                   <>
                     <TabsContent value="details">
-                      <Button onClick={() => navigate('/')} > Go Back </Button>
                       <Details
                         {...userProject}
                         instructionIndex={instructionIndex}
@@ -114,10 +117,6 @@ const Guidance = () => {
           </section>
         </Tabs>
       </main>
-      {/* <aside className='h-screen w-1/3 float-left'>
-        <Chat />
-      </aside> */}
-    </div>
   )
 }
 
@@ -137,7 +136,8 @@ export const userProjectLoader = async ({ params: { id } }) => {
       images: instruction.media_items
         .filter(media => media.media_type === 'image')
         .map(media => media.url)
-    }))
+    })),
+    image: project.image
   }
   return userProject
 }

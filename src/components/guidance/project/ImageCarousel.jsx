@@ -12,9 +12,7 @@ const ImageCarousel = ({ images }) => {
         interval={5000} // Adjust as needed
       >
         {images.map((image, index) => (
-          <div key={index}>
-            <img src={image} alt={`${index}`} className='h-96 object-cover rounded-xl'/>
-          </div>
+            <img key={index}src={image} alt={`${index}`} className='object-cover rounded-xl'/>
         ))}
       </Carousel>
   )

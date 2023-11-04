@@ -6,7 +6,7 @@ const InstructionPreview = ({ instruction, instructionIndex, setInstructionIndex
   const isOngoing = instruction.instruction_index === instructionIndex
 
   return (<div
-      className={`flex w-full rounded-lg p-4 ${isOngoing ? 'bg-nusb-v-light' : 'bg-nusb-light'} ${isIdle ? '' : 'hover:bg-nusb-v-light cursor-pointer'}`}
+      className={`flex w-full rounded-lg p-4 ${isOngoing ? 'bg-nusb-v-light' : 'bg-white'} ${isIdle ? '' : 'hover:bg-nusb-v-light cursor-pointer'}`}
       onClick={() => isIdle ? 0 : setInstructionIndex(instruction.instruction_index)}>
       <div className='w-1/12 justify-items-center'>
         <Avatar>

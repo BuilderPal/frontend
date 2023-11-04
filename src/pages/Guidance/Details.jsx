@@ -7,8 +7,10 @@ import InstructionPreview from 'components/guidance/project/InstructionPreview'
 import ResourcePreview from 'components/guidance/project/ResourcePreview'
 import { capitalise } from 'lib/utils'
 import ImageCarousel from 'components/guidance/project/ImageCarousel'
+import { Button } from 'components/ui/button'
+import { IoIosArrowForward } from 'react-icons/io'
 
-const Details = ({ title, description, complexity, duration_in_minutes: duration, resources, instructions, instructionIndex, setInstructionIndex, image }) => {
+const Details = ({ navigateNext, title, description, complexity, duration_in_minutes: duration, resources, instructions, instructionIndex, setInstructionIndex, image }) => {
   console.log(image)
   return (
     <div className='flex flex-row mb-10 h-full space-x-10'>
@@ -32,7 +34,13 @@ const Details = ({ title, description, complexity, duration_in_minutes: duration
       <div className='w-1/2 h-full'>
             <ImageCarousel images={[image]} />
       </div>
+      <div className="fixed inset-x-0 bottom-0 px-4 py-2 flex justify-between z-10">
+        <div></div>
+        <Button className="bg-blue-600 text-2xl py-7" onClick={() => navigateNext()}>
+            Start Building! <IoIosArrowForward className='ml-1' />
+          </Button>
 
+      </div>
       {/*
       <h2 className='font-bold text-2xl mb-2 mt-6'>Instructions</h2>
       <div className='grid gap-4'>

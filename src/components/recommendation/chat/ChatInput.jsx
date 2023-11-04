@@ -10,6 +10,9 @@ export default function ChatInput ({ sendTextMessage, sendAudioMessage }) {
   const [recordedBlob, setRecordedBlob] = useState(null)
   const isAudioActive = isRecording || recordedBlob
   const sendMessage = async () => {
+    if (!currMessage && !recordedBlob) {
+      return
+    }
     setIsAwaitingResponse(true)
 
     const message = currMessage
@@ -24,6 +27,12 @@ export default function ChatInput ({ sendTextMessage, sendAudioMessage }) {
     }
     setIsAwaitingResponse(false)
   }
+  const onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      // Call the function you want to run
+      sendMessage()
+    }
+  }
   return (
         <div className="border-t-2 border-gray-200 pt-4 mb-2 sm:mb-0">
             <div className="flex items-center transition-all duration-500 ease-in-out">
@@ -35,7 +44,7 @@ export default function ChatInput ({ sendTextMessage, sendAudioMessage }) {
                 {/* Input Component */}
                 {!isAudioActive && (
                     <div className="flex-grow pl-1 pr-2">
-                        <Input disabled={isAwaitingResponse} value={currMessage} onChange={(e) => { setCurrMessage(e.target.value) }} type="text" placeholder="Write your message!" />
+                        <Input disabled={isAwaitingResponse} value={currMessage} onChange={(e) => { setCurrMessage(e.target.value) }} type="text" placeholder="Write your message!" onKeyPress={onKeyPress} />
                     </div>
                 )}
 

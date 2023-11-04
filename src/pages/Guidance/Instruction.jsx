@@ -4,7 +4,7 @@ import ImageCarousel from 'components/guidance/project/ImageCarousel'
 import InstructionPreview from '../../components/guidance/project/InstructionPreview'
 import { Button } from 'components/ui/button'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-const Instruction = ({ instructions, instructionIndex, setInstructionIndex }) => {
+const Instruction = ({ navigatePrev, instructions, instructionIndex, setInstructionIndex }) => {
   const instruction = instructions[instructionIndex]
   return (
     <>
@@ -13,7 +13,9 @@ const Instruction = ({ instructions, instructionIndex, setInstructionIndex }) =>
           ? <Button className={'bg-blue-600 text-2xl py-7'} onClick={() => setInstructionIndex(instructionIndex - 1)}>
             <IoIosArrowBack className='mr-1' /> Previous Step
           </Button>
-          : <div></div>}
+          : <Button className={'bg-blue-600 text-2xl py-7'} onClick={() => navigatePrev()}>
+          <IoIosArrowBack className='mr-1' /> Project Details
+        </Button>}
         {instructionIndex + 1 < instructions.length
           ? <Button className="bg-blue-600 text-2xl py-7" onClick={() => setInstructionIndex(instructionIndex + 1)}>
             Next Step <IoIosArrowForward className='ml-1' />

@@ -63,26 +63,22 @@ const templateUserProject = {
 }
 
 const Guidance = () => {
-  const { id } = useParams()
   const userProjectLoaded = useLoaderData()
   const [userProject, setUserProject] = useState(userProjectLoaded)
   const [instructionIndex, setInstructionIndex] = useState(0)
   const [isLoadingProject, setIsLoadingProject] = useState(false)
+  const [isViewingInstructions, setIsViewingInstructions] = useState(false)
   const navigate = useNavigate()
   console.log(userProject)
   return (
       <main className='w-full h-full'>
         <Tabs defaultValue='details' className='p-4 h-full'>
           <menu className='grid content-center'>
-            <div className='flex place-content-between'>
+            <div className='flex space-x-5'>
               <>
-              <Button onClick={() => navigate(-2)}><BiArrowBack/></Button>
+              <Button variant="outline" onClick={() => navigate(-2)}><BiArrowBack/></Button>
               <h1 className='text-4xl'>BuilderPal</h1>
               </>
-              <TabsList className='w-fit object-right'>
-                <TabsTrigger value="details">Project Details</TabsTrigger>
-                <TabsTrigger value="instructions">Instructions</TabsTrigger>
-              </TabsList>
             </div>
           </menu>
           <Separator className='my-2' />
@@ -97,20 +93,21 @@ const Guidance = () => {
                 />
                 : (
                   <>
-                    <TabsContent value="details">
-                      <Details
-                        {...userProject}
-                        instructionIndex={instructionIndex}
-                        setInstructionIndex={setInstructionIndex}
-                      />
-                    </TabsContent>
-                    <TabsContent value="instructions">
-                      <Instruction
+                      {isViewingInstructions
+                        ? <Instruction
                         instructions={userProject.instructions}
                         instructionIndex={instructionIndex}
                         setInstructionIndex={setInstructionIndex}
+                        navigatePrev={() => setIsViewingInstructions(false)}
                       />
-                    </TabsContent>
+                        : <Details
+                        {...userProject}
+                        instructionIndex={instructionIndex}
+                        setInstructionIndex={setInstructionIndex}
+                        navigateNext = {() => setIsViewingInstructions(true)}
+
+                      />
+                      }
                   </>
                   )
             }

@@ -66,15 +66,16 @@ class APIClass {
     return axios.delete(this._constructUrl(`/api/chats/${chatId}`))
   }
 
-  chatbotAudioQueryHandler (chatId, formData) {
+  chatbotAudioQueryHandler (chatId, iterationIndex, audioBlob) {
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     }
-    return axios.put(this._constructUrl(`/api/chats/audio/${chatId}`), formData, config)
+    const formData = new FormData()
+    formData.append('audio', audioBlob)
+    return axios.put(this._constructUrl(`/api/discovery_chats/${chatId}/speech/${iterationIndex}`), formData, config)
   }
-
   // Projects related methods
 
   getProject (projectId) {
@@ -105,10 +106,6 @@ class APIClass {
 
   getDiscoveryChat (id) {
     return axios.get(this._constructUrl(`/api/discovery_chats/${id}`))
-  }
-
-  sendDiscoverageChatMessage (id, message) {
-    return axios.post(this._constructUrl(`/api/discovery_chats/${id}/messages`), { message })
   }
 
   getRecommendedStaticProjects (discoveryChatId, iterationIndex, offset = 0, limit = 5) {

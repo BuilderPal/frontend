@@ -95,10 +95,19 @@ export default function ContentArea({ recommendationChatId, currIterationIndex }
       fetchDynamicSearchResults(true, recommendationChatId, currIterationIndex, 0, LIMIT)
     }
     return () => { isMount.current = false }
-  }, [recommendationChatId, currIterationIndex])
+  }, [currIterationIndex])
+
+  useEffect(() => {
+    isMount.current = true
+    fetchStaticSearchResults(true, recommendationChatId, 0, 0, LIMIT)
+    if (currIterationIndex > 0) {
+      fetchDynamicSearchResults(true, recommendationChatId, 0, 0, LIMIT)
+    }
+    return () => { isMount.current = false }
+  }, [recommendationChatId])
 
   const fetchStaticSearchResults = async (toReplace, queryRecommendationChatId, queryIterationIndex, offset, limit) => {
-    console.log('Fetching static search results')
+    console.log('Fetching static search results', {currIterationIndex, queryIterationIndex, recommendationChatId, queryRecommendationChatId, isMount, toReplace, totalResults})
     if (!isMount.current) {
       return
     }
@@ -107,6 +116,9 @@ export default function ContentArea({ recommendationChatId, currIterationIndex }
     }
     if (recommendationChatId !== queryRecommendationChatId || currIterationIndex !== queryIterationIndex || queryIterationIndex < 0) {
       return
+    }
+    if (toReplace) {
+      setStaticSearchResults([])
     }
     setIsLoadingStatic(true)
     const { data: { is_section_registered: isReady, projects: resultsFetched, total_count: totalCountFetched } } = await API.getRecommendedStaticProjects(recommendationChatId, queryIterationIndex, offset, limit)
@@ -139,6 +151,9 @@ export default function ContentArea({ recommendationChatId, currIterationIndex }
     }
     if (recommendationChatId !== queryRecommendationChatId || currIterationIndex !== queryIterationIndex || queryIterationIndex < 0) {
       return
+    }
+    if (toReplace) {
+      setDynamicSearchResults([])
     }
     setIsLoadingDynamic(true)
     const { data: { is_section_registered: isReady, projects: resultsFetched } } = await API.getRecommendedDynamicProjects(recommendationChatId, queryIterationIndex, offset, limit)

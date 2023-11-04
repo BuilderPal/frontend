@@ -15,6 +15,11 @@ const Recorder = ({ isRecording, setIsRecording, setRecordedBlob, recordedBlob }
       mediaRecorder.current.ondataavailable = event => {
         setRecordedBlob(event.data)
       }
+      mediaRecorder.current.onstop = () => {
+        mediaRecorder.current.stream.getTracks().forEach(track => track.stop())
+        clearInterval(interval.current)
+        setDuration(0)
+      }
       mediaRecorder.current.start()
 
       interval.current = setInterval(() => {
@@ -29,8 +34,6 @@ const Recorder = ({ isRecording, setIsRecording, setRecordedBlob, recordedBlob }
     if (mediaRecorder.current) {
       mediaRecorder.current.ondataavailable = null
       mediaRecorder.current.stop()
-      mediaRecorder.current.stream.getTracks().forEach(track => track.stop())
-      clearInterval(interval.current)
       setIsRecording(false)
     }
     setRecordedBlob(null)
@@ -40,8 +43,6 @@ const Recorder = ({ isRecording, setIsRecording, setRecordedBlob, recordedBlob }
   const stopRecording = () => {
     if (mediaRecorder.current) {
       mediaRecorder.current.stop()
-      mediaRecorder.current.stream.getTracks().forEach(track => track.stop())
-      clearInterval(interval.current)
       setIsRecording(false)
     }
   }

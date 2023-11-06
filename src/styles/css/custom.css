@@ -65,16 +65,11 @@
 	top: 60px;
 }
 
-.profile-header .profile-header-info{
-	height: 130px;
-}
-
 .profile-header .profile-header-info .user-stats {
     top: 15px;
 }
 
 .profile-header .profile-header-info .user-stats{
-	position: relative;
 	left: auto;
 }
 

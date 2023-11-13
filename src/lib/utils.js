@@ -127,6 +127,76 @@ class APIClass {
   getDiscoveryChatMetadata (discoveryChatId, iterationIndex) {
     return axios.put(this._constructUrl(`/api/discovery_chats/${discoveryChatId}/suggestions_and_projects_flag/${iterationIndex}`))
   }
+
+  getDiscoveryStandardResponse (discoveryChatId, iterationIndex, message) {
+    console.log('Standard Discovery Message', { discoveryChatId, iterationIndex, message })
+    return fetch(this._constructUrl(`/api/discovery_chats/${discoveryChatId}/messages/standard/${iterationIndex}`), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message })
+    })
+  }
+
+  getDiscoveryGuidingResponse (discoveryChatId, iterationIndex, message) {
+    console.log('Guiding Discovery Message', { discoveryChatId, iterationIndex, message })
+
+    return fetch(this._constructUrl(`/api/discovery_chats/${discoveryChatId}/messages/guiding/${iterationIndex}`), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message })
+    })
+  }
+
+  getDiscoveryConversationalResponse (discoveryChatId, iterationIndex, message) {
+    console.log('Conversational Discovery Message', { discoveryChatId, iterationIndex, message })
+    return fetch(this._constructUrl(`/api/discovery_chats/${discoveryChatId}/messages/conversational/${iterationIndex}`), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message })
+    })
+  }
+
+  async getDiscoverySpeechStandardResponse (discoveryChatId, iterationIndex, blob) {
+    console.log('Standard Discovery Speech', { discoveryChatId, iterationIndex })
+
+    const formData = new FormData()
+    formData.append('chat_id', discoveryChatId)
+    formData.append('audio', blob)
+    return fetch(API._constructUrl(`/api/discovery_chats/${discoveryChatId}/speech/standard/${iterationIndex}`), {
+      method: 'POST',
+      body: formData
+    })
+  }
+
+  async getDiscoverySpeechGuidingResponse (discoveryChatId, iterationIndex, blob) {
+    console.log('Guiding Discovery Speech', { discoveryChatId, iterationIndex })
+
+    const formData = new FormData()
+    formData.append('chat_id', discoveryChatId)
+    formData.append('audio', blob)
+    return fetch(API._constructUrl(`/api/discovery_chats/${discoveryChatId}/speech/guiding/${iterationIndex}`), {
+      method: 'POST',
+      body: formData
+    })
+  }
+
+  async getDiscoverySpeechConversationalResponse (discoveryChatId, iterationIndex, blob) {
+    console.log('Conversational Discovery Speech', { discoveryChatId, iterationIndex })
+
+    const formData = new FormData()
+    formData.append('chat_id', discoveryChatId)
+    formData.append('audio', blob)
+    return fetch(API._constructUrl(`/api/discovery_chats/${discoveryChatId}/speech/conversational/${iterationIndex}`), {
+      method: 'POST',
+      body: formData
+    })
+  }
 }
 
 export const API = new APIClass()

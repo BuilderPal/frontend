@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Badge } from 'components/ui/badge'
 import { faClock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,8 +11,25 @@ import { Button } from 'components/ui/button'
 import { IoIosArrowForward } from 'react-icons/io'
 import { AiOutlineCheck } from 'react-icons/ai'
 
-const Details = ({ navigateNext, title, description, complexity, duration_in_minutes: duration, resources, instructions, instructionIndex, setInstructionIndex, image, categories }) => {
+const Details = ({ navigateNext, title, description, complexity, duration_in_minutes: duration, resources, instructions, instructionIndex, setInstructionIndex, image, categories, userProjectId }) => {
   console.log(image)
+  const [resourcesChecked, setResourcesChecked] = useState(resources.map((resource) => ({ resource, checked: false })))
+  const toggleResourceChecked = (i) => {
+    setResourcesChecked((prevResources) => {
+      const { resource, checked } = prevResources?.[i]
+      return [...prevResources.slice(0, i), { resource, checked: !checked }, ...prevResources.slice(i + 1)]
+    })
+  }
+  useEffect(() => {
+    const savedResourcesChecked = localStorage.getItem(`guidance_details_resources_${userProjectId}`)
+    if (savedResourcesChecked) {
+      setResourcesChecked(JSON.parse(savedResourcesChecked))
+    }
+  }, [])
+  useEffect(() => {
+    localStorage.setItem(`guidance_details_resources_${userProjectId}`, JSON.stringify(resourcesChecked))
+  }, [resourcesChecked])
+
   return (
     <div className=" max-w-xl mx-auto">
       <div className='grow p-3'>
@@ -70,13 +87,13 @@ const Details = ({ navigateNext, title, description, complexity, duration_in_min
 
           <div className="widget-box-content">
 
-            {resources.map((resource, i) => (
+            {resourcesChecked.map(({ resource, checked }, i) => (
               <div className="checkbox-line pb-3" key={i}>
-                <div className="checkbox-wrap">
-                  <input type="checkbox" checked={true} />
+                <div className="checkbox-wrap" onClick={() => toggleResourceChecked(i)}>
+                  <input type="checkbox" checked={checked}/>
 
                   <div className="checkbox-box">
-                    <AiOutlineCheck color='white' />
+                    {checked && <AiOutlineCheck color='white' />}
                   </div>
 
                   <label htmlFor="category-all">{resource}</label>

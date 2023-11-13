@@ -1,16 +1,23 @@
-import { API } from 'lib/utils'
-import React from 'react'
-import { Navigate, useLoaderData } from 'react-router-dom'
+import Loader from 'components/ui/loader'
+import React, { useState, useEffect } from 'react'
+import { Navigate, useLoaderData, useNavigate } from 'react-router-dom'
 
 export default function RecommendationBase () {
-  const recommendationChatId = useLoaderData()
-  return <Navigate to={`/${recommendationChatId}`} />
-}
+  const [hasLoading, setHasLoading] = useState(false)
+  const [recommendationChatId, setRecommendationChatId] = useState(null)
+  const navigate = useNavigate()
+  useEffect(() => {
+    const recommendationChatIdLS = localStorage.getItem('recommendationChatId')
+    console.log('Retrieved chat_id from local storage', recommendationChatIdLS)
+    setRecommendationChatId(recommendationChatIdLS, () => setHasLoading(true))
+    navigate(recommendationChatIdLS ? `/${recommendationChatIdLS}` : '/landing')
+  }, [])
+  return (hasLoading
+    ? (
+    <div className="builderpal">
 
-export const recommendationChatIdLoader = async () => {
-  const res = await API.createDiscoveryChat()
-  console.log(res.data.chat_id)
-  // const { data: { user_project_id: userProjectId } } = await API.createDiscoveryChat()
-  // console.log(userProjectId)
-  return res.data.chat_id
+      <Loader/>
+    </div>
+      )
+    : < Navigate to = {recommendationChatId ? `/${recommendationChatId}` : '/landing'} />)
 }

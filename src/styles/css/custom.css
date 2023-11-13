@@ -1,306 +1,164 @@
-.landing-info-text a{
-	color: white;
-	text-decoration: underline;
+.landing-form{
+    top: 25%;
 }
 
-.button.secondary {
-    background-color: black;
-    box-shadow: 4px 7px 12px 0 rgba(97,93,250,.2);
-	color: white;
-}
-
-.button.secondary:hover{
-	background-color: #464646;
-	color: white;
-}
-
-.form-box .button{
-	width: 100%;
-}
-
-.landing{
-    width: 100%;
-    height: 100%;
-    background: url(../img/landing/viviboom-landing-background.jpg) no-repeat;
-    background-size: cover;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-.header{
-	background-color: black;
-}
-
-.header .title{
-	font-family: Titillium Web,sans-serif;
-	    font-size: 48px;
-	    font-weight: 900;
-		color: white;
-		margin-left: 10px;
-}
-
-.menu-main .menu-main-item .menu-main-item-link{
-	font-size: 16px;
-}
-
-.action-list:after, .action-list:before{
-	width: 0px;
-}
-
-.dropdown-box-button.secondary{
-	background-color: black;
-}
-
-
-.grid.grid-3-3-3, .grid.grid-3-3-3-3 {
-    grid-template-columns: repeat(auto-fit, 30%);
-}
-
-.user-short-description.big {
-    padding-top: 25px;
-}
-
-.profile-header .profile-header-info .user-stats{
-	top: 60px;
-}
-
-.profile-header .profile-header-info .user-stats {
-    top: 15px;
-}
-
-.profile-header .profile-header-info .user-stats{
-	left: auto;
-}
-
-.user-short-description.big .user-short-description-title{
-	font-size: 28px;
-}
-
-.product-preview .product-preview-info .button{
-	font-size: 18px;
-}
-
-.mainhome-boxes .product-preview .product-preview-info .product-preview-title a{
-	font-weight: 400;
-	line-height: normal;
-}
-
-.product-preview .product-preview-info{
-	text-align: center;
-}
-
-.account-hub-content{
-	margin-bottom: 60px;
-}
-
-.project-listing .product-preview .product-preview-info .product-preview-title{
-	font-size: 24px;
-}
-
-.project-listing .product-preview .product-preview-meta{
-	height: auto;
-	padding: 14px 28px;
-}
-
-.project-listing .product-preview .product-preview-author .product-preview-author-title{
-	font-size: 16px;
-	padding-left: 20px;
-}
-
-.project-listing .product-preview .product-preview-author .product-preview-author-text{
-	font-size: 16px;
-	padding-left: 20px;
-}
-
-.project-listing .user-avatar.no-border.micro {
-    width: 30px;
-    height: 32px;
-}
-
-.button.primary, .button.primary:hover{
-	color: white;
-}
-
-.bigaction-button-wrapper {
-    width: 100%;
+.form-box{
+    box-shadow: 10px 10px #8f8f8f;
     text-align: center;
-    margin-top: 40px;
 }
 
-.bigaction-button-wrapper .button{
-	margin: 0 auto;
-	font-size: 16px;
-}
-
-p.badge-item-stat-text.badge-not-earned {
-    width: 100%;
-    margin: 10px 0 0 0;
-    color: #a2a2a2;
+.form-box p{
+    font-size: 24px;
     font-weight: bold;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
-.badge-not-earned a:hover{
-	text-decoration: underline;
+.form-box .button.primary{
+    font-size: 24px;
 }
 
-p.badge-item-stat-text.badge-earned {
-    width: 100%;
-    margin: 10px 0 0 0;
-    color: #ef9e09;
+.form-box .button.primary:hover{
+    border: 3px solid #013539;
+}
+
+.builderpal .chat-widget-wrap .chat-widget .chat-widget-messages{
+    height: auto;
+    padding: 20px;
+}
+
+.builderpal .starter-title-message{
     font-weight: bold;
+    font-size: 18px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
-.quest-item-meta {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    margin-top: 22px;
-    padding: 14px 0;
-    border-top: 1px solid #eaeaf5;
+.builderpal .chat-widget-messages .button.starter{
+    margin-bottom: 20px;
 }
 
-.quest-item-meta-title, .quest-item-meta-text{
-	font-size: 14px;
-	padding-left: 10px;
-	font-weight: bold;
+.builderpal .chat-widget-messages .button.starter:hover, .builderpal .simplebar-content  .button.mid-dialogue:hover{
+    border: 3px solid #013539;
 }
 
-.badge-item-stat {
-    padding: 32px 0px 0px;
+.builderpal .chat-widget-form .form-item.input-container {
+    width: 70%;
 }
 
-.badge-item-stat .quest-item-meta{
-	padding-left: 20px;
-	padding-right: 20px;
-}
-
-.badge-item-stat:hover {
-    box-shadow: 0 0 10px 0 rgba(0, 184, 255, .8);
-}
-
-p.section-pretitle.badge-description {
-    margin-top: 15px;
-}
-
-.white-container-box .grid{
-	margin-top: 0px;
-}
-
-.white-container-box .badge-image-container{
-	margin: 0 auto;
-}
-
-.white-container-box {
-    align-items: center;
-	height: auto;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 0 40px 0 rgba(94,92,154,.06);
-    background-color: #fff;
-    margin-top: 20px;
-	margin-bottom: 40px;
-}
-
-.white-container-box.right-side{
-	padding: 20px;
-}
-
-.white-container-box .section-title{
-	margin-bottom: 10px;
-}
-
-.white-container-box .section-pretitle{
-	margin-bottom: 10px;
-	line-height: 1.5;
-}
-
-.badge-idea-container{
-	padding-right: 10px;
-}
-
-.badge-idea-container .badge-idea-description a{
-	color: #22d3e1;
-	font-weight: bold;
-}
-
-.badge-idea-container .badge-idea-description{
-	font-family: Rajdhani,sans-serif;
-	margin-top: 10px;
-}
-
-.badge-idea-container{
-	margin-top: 20px;
-}
-
-.profile-listing .user-short-description {
-    padding-top: 65px;
-}
-
-.profile-listing .user-preview .user-preview-info .badge-list {
-    margin-top: 10px;
-}
-
-.profile-listing .user-preview .user-preview-info .user-preview-actions{
-	margin-top: 20px;
-}
-
-.project-listing .bigaction-button-wrapper.create-project {
+.builderpal .content-grid .grid {
     margin-top: 0px;
+}
+
+
+.builderpal .content-grid{
+    padding-top: 100px;
+}
+
+.builderpal .content-grid .section-header {
+    margin-top: 30px;
+}
+
+.builderpal .simplebar-content  .button.mid-dialogue{
+    margin-top: 20px;
+}
+
+.builderpal .dreamerbuilderpal-left .chat-widget, .builderpal .instructablepal-left .chat-widget{
+    width: auto;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.builderpal .dreamerbuilderpal-left, .builderpal .dreamerbuilderpal-right, .builderpal .instructablepal-left, .builderpal .instructablepal-right{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.builderpal .dreamerbuilderpal-left, .builderpal .instructablepal-left{
+    width: 30%;
+    padding: 20px;
+}
+
+.builderpal .dreamerbuilderpal-right, .builderpal .instructablepal-right{
+    width: 68%;
+    padding: 20px;
+}
+
+.builderpal .dreamerbuilderpal-right .quest-item {
+    width: 47%;
+    display: inline-block;
+    margin-right: 2%;
+    vertical-align: top;
+    height: 380px;
     margin-bottom: 40px;
 }
 
-.profile-numprojects{
+.builderpal .dreamerbuilderpal-right .button.letstry, .builderpal .instructablepal-right .button.letstry {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    box-shadow: 4px 7px 12px 0 rgb(36 36 36 / 20%);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.builderpal .dreamerbuilderpal-right .button.letstry:hover, .builderpal .instructablepal-right .button.letstry:hover{
+    border: 3px solid black;
+}
+
+.builderpal .dreamerbuilderpal-right .quest-item .quest-item-text{
+    margin-top: 18px;
+    color: #3e3f5e;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.4285714286em;
+    height: 80px;
+    overflow: hidden;
+}
+
+.builderpal .dreamerbuilderpal-right .midway-checkpoint, .builderpal .instructablepal-right .midway-checkpoint{
+    margin-top: 0px;
     text-align: center;
+    margin-bottom: 40px;
+}
+
+.builderpal .dreamerbuilderpal-right .midway-checkpoint .button, .builderpal .instructablepal-right .midway-checkpoint .button{
+    max-width: 40%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.builderpal .dreamerbuilderpal-right .midway-checkpoint .button:hover, .builderpal .instructablepal-right .midway-checkpoint .button:hover{
+    border: 3px solid black;
+}
+
+.builderpal .instructablepal-right .quest-esttime{
     margin-top: 10px;
 }
 
-.profile-numprojects span{
-	color: #3e3f5e;
-    font-family: Rajdhani,sans-serif;
-    line-height: 1em;
-    font-weight: bold;
+.builderpal .instructablepal-right .quest-item .quest-item-cover{
+    height: 250px;
 }
 
-.num_likes{
-	margin-left: 5px;
-	margin-top: 5px;
+.builderpal .instructablepal-right .quest-item .quest-item-info{
+    padding-top: 20px;
 }
 
-.content-action.project-single{
-	margin-top: 10px;
+.builderpal .instructablepal-right .quest-item .quest-item-text{
+    height: 50px;
+    margin-top: 10px;
+    color: #3e3f5e;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.4285714286em;
+    overflow: hidden;
 }
 
-.project-single .post-option{
-	width: 100px;
-	margin-left: 10px;
-}
-
-
-.projectupload-filefields {
-    margin-top: 20px;
-}
-
-.projectupload-filefields input[type="file"] {
-    margin-left: 20px;
-}
-
-.projectupload-filefields.form-input label{
-	top: -20px;
-}
-
-.project-upload-badgelisting{
-	margin-top: 60px;
-}
-
-.badge-item-stat.selected{
-	border: 4px solid #62c762;
-}
-
-@media screen and (max-width: 768px) {
-
-	.grid.grid-3-3-3, .grid.grid-3-3-3-3 {
-	    grid-template-columns: repeat(auto-fit, 100%);
-	}
+.builderpal .instructablepal-right .quest-item{
+    height: 485px;
+    width: 47%;
+    display: inline-block;
+    margin-right: 2%;
+    vertical-align: top;
+    margin-bottom: 40px;
 }

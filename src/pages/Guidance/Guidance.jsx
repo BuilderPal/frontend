@@ -62,6 +62,7 @@ const templateUserProject = {
 }
 
 const Guidance = () => {
+  const { id: userProjectid } = useParams()
   const userProjectLoaded = useLoaderData()
   const [userProject, setUserProject] = useState(userProjectLoaded)
   const [instructionIndex, setInstructionIndex] = useState(0)
@@ -91,7 +92,7 @@ const Guidance = () => {
                 instructionIndex={instructionIndex}
                 setInstructionIndex={setInstructionIndex}
                 navigateNext={() => setIsViewingInstructions(true)}
-
+                userProjectId={userProjectid}
               />}
 
     </div>

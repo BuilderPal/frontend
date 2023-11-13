@@ -1,16 +1,15 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs'
 import { Separator } from 'components/ui/separator'
-import Details from './Details'
-import Instruction from './Instruction'
+import Details from '../../components/guidance/project/Details'
+import Instruction from '../../components/guidance/project/Instruction'
 import Chat from '../../components/guidance/chat/Chat'
 import { API } from '../../lib/utils'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { BiArrowBack } from 'react-icons/bi'
-
+import { AiOutlineCheck } from 'react-icons/ai'
 import React, { useState, useEffect } from 'react'
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
 import { Button } from 'components/ui/button'
-
 const templateUserProject = {
   title: 'Sample Project Title',
   duration_in_minutes: 60,
@@ -68,52 +67,34 @@ const Guidance = () => {
   const [instructionIndex, setInstructionIndex] = useState(0)
   const [isLoadingProject, setIsLoadingProject] = useState(false)
   const [isViewingInstructions, setIsViewingInstructions] = useState(false)
+
   const navigate = useNavigate()
   console.log(userProject)
   return (
-      <main className='w-full h-full'>
-        <Tabs defaultValue='details' className='p-4 h-full'>
-          <menu className='grid content-center'>
-            <div className='flex space-x-5'>
-              <>
-              <Button variant="outline" onClick={() => navigate(-2)}><BiArrowBack/></Button>
-              <h1 className='text-4xl'>BuilderPal</h1>
-              </>
-            </div>
-          </menu>
-          <Separator className='my-2' />
-          <section className='h-[90%] overflow-y-auto'>
-            {
-              isLoadingProject
-                ? <ClipLoader
-                  loading={isLoadingProject}
-                  size={150}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-                : (
-                  <>
-                      {isViewingInstructions
-                        ? <Instruction
-                        instructions={userProject.instructions}
-                        instructionIndex={instructionIndex}
-                        setInstructionIndex={setInstructionIndex}
-                        navigatePrev={() => setIsViewingInstructions(false)}
-                      />
-                        : <Details
-                        {...userProject}
-                        instructionIndex={instructionIndex}
-                        setInstructionIndex={setInstructionIndex}
-                        navigateNext = {() => setIsViewingInstructions(true)}
+    <div className='flex flex-col w-full'>
+      <div className='flex space-x-5 p-3 items-center'>
+        <>
+          <button className="w-10 h-10 pl-1" onClick={() => navigate(-2)}><BiArrowBack /></button>
+          <h1 className='text-4xl'>BuilderPal</h1>
+        </>
+      </div>
+      <Separator className='mb-2' />
+      {isViewingInstructions
+        ? <Instruction
+                instructions={userProject.instructions}
+                instructionIndex={instructionIndex}
+                setInstructionIndex={setInstructionIndex}
+                navigatePrev={() => setIsViewingInstructions(false)}
+              />
+        : <Details
+                {...userProject}
+                instructionIndex={instructionIndex}
+                setInstructionIndex={setInstructionIndex}
+                navigateNext={() => setIsViewingInstructions(true)}
 
-                      />
-                      }
-                  </>
-                  )
-            }
-          </section>
-        </Tabs>
-      </main>
+              />}
+
+    </div>
   )
 }
 

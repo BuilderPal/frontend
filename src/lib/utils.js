@@ -124,8 +124,8 @@ class APIClass {
     return axios.post(this._constructUrl(`/api/discovery_chats/${discoveryChatId}/sections/${iterationIndex}`))
   }
 
-  getDiscoveryChatSuggestionsAndBreadCrumb (discoveryChatId, iterationIndex) {
-    return axios.get(this._constructUrl(`/api/discovery_chats/${discoveryChatId}/suggestions_breadcrumbs/${iterationIndex}`))
+  getDiscoveryChatMetadata (discoveryChatId, iterationIndex) {
+    return axios.put(this._constructUrl(`/api/discovery_chats/${discoveryChatId}/suggestions_and_projects_flag/${iterationIndex}`))
   }
 }
 

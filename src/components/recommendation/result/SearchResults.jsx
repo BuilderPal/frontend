@@ -81,7 +81,7 @@ const searchResultSample = [
 const MAX_DYNAMIC_RESULTS = 10
 const LIMIT = 5
 
-export default function ContentArea({ recommendationChatId, currIterationIndex }) {
+export default function ContentArea ({ shouldShowResults, recommendationChatId, currIterationIndex }) {
   const [staticSearchResults, setStaticSearchResults] = useState([])
   const [dynamicSearchResults, setDynamicSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(null)
@@ -107,7 +107,7 @@ export default function ContentArea({ recommendationChatId, currIterationIndex }
   }, [recommendationChatId])
 
   const fetchStaticSearchResults = async (toReplace, queryRecommendationChatId, queryIterationIndex, offset, limit) => {
-    console.log('Fetching static search results', {currIterationIndex, queryIterationIndex, recommendationChatId, queryRecommendationChatId, isMount, toReplace, totalResults})
+    console.log('Fetching static search results', { currIterationIndex, queryIterationIndex, recommendationChatId, queryRecommendationChatId, isMount, toReplace, totalResults })
     if (!isMount.current) {
       return
     }
@@ -175,8 +175,8 @@ export default function ContentArea({ recommendationChatId, currIterationIndex }
     }
   }
 
-  return (
-    <div className="flex flex-col p-4 w-2/3 overflow-y-auto">
+  return (shouldShowResults && (
+  <div className="w-1/2 flex flex-col p-4 grow-1 overflow-y-auto">
       {currIterationIndex > 0 && (<div className="mb-4">
         <div className='text-2xl font-semi-bold tracking-tight mb-2'>See what BuilderPal came up with</div>
         <div className="flex flex-row overflow-x-auto">
@@ -226,6 +226,6 @@ export default function ContentArea({ recommendationChatId, currIterationIndex }
               : (totalResults && totalResults > staticSearchResults.length && <Button onClick={() => fetchStaticSearchResults(false, recommendationChatId, currIterationIndex, staticSearchResults.length, LIMIT)}>Load More +</Button>)}
         </div>
       </div>
-    </div>
+    </div>)
   )
 }

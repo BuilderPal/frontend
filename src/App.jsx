@@ -7,6 +7,7 @@ import { userProjectLoader } from 'pages/Guidance/Guidance'
 import Project, { userProjectIdLoader } from 'pages/Guidance/Project'
 import RecommendationBase, { recommendationChatIdLoader } from 'pages/Recommendation/RecommendationBase'
 import DynamicProject from 'pages/Guidance/DynamicProject'
+import UserProjectCompletion from 'pages/Guidance/UserProjectCompletion'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
       <Route path="/project/dynamic/:id" element={<DynamicProject />} />
       <Route path="/project/:id" element={<Project />} loader={userProjectIdLoader} />
       <Route path="/user_project/:id" element={<Guidance />} loader={userProjectLoader}/>
+      <Route path="/user_project/:id/completion" element={<UserProjectCompletion />} />
     </Route>
   )
 )

@@ -7,6 +7,7 @@ import { ClipLoader } from 'react-spinners'
 import { API } from '../../../lib/utils'
 import { Button } from 'components/ui/button'
 import { useNavigate } from 'react-router-dom'
+import ChatMessage from './ChatMessage'
 
 const recommendationChatSample =
   [{
@@ -30,12 +31,31 @@ const recommendationChatSample =
     ]
   }]
 
-function Chat ({ recommendationChatId, setCurrIterationIndex }) {
+function Chat ({ recommendationChatId, setCurrIterationIndex, setShouldShowResults, shouldShowResults }) {
   const [iterations, setIterations] = useState([])
   const [iterationsLength, setIterationsLength] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [isAwaitingResponse, setIsAwaitingResponse] = useState(false)
+  const [messages, setMessages] = useState([])
   const isMounted = useRef(true)
+  useEffect(() => {
+    setMessages(iterations.flatMap((iteration) => {
+      const iterationMessages = [{
+        isUser: false,
+        message: iteration.response
+      }]
+      if (iteration.message !== '') {
+        iterationMessages.push({
+          isUser: true,
+          message: iteration.message
+        })
+      }
+      return iterationMessages
+    }))
+  }, [iterations])
+  console.log(messages)
+  console.log('iterations', iterations)
+
   useEffect(() => {
     isMounted.current = true
     return () => { isMounted.current = false }
@@ -50,14 +70,14 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
   }, [iterationsLength])
   // Derive from iterations
   const currIteration = iterations.length ? iterations?.[iterations.length - 1] : null
-  const breadcrumbs = iterations?.map(message => message.breadcrumb)
+  // const breadcrumbs = iterations?.map(message => message.breadcrumb)
   // Retrieve iterations using API
   useEffect(() => {
     console.log(recommendationChatId)
     fetchRecommendationChat(recommendationChatId)
   }, [recommendationChatId])
   useEffect(() => {
-    fetchSuggestionsAndBreadcrumb(recommendationChatId, iterationsLength - 1)
+    fetchMetadata(recommendationChatId, iterationsLength - 1)
   }, [recommendationChatId, iterationsLength])
   const navigate = useNavigate()
 
@@ -78,25 +98,26 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
     })
   }
 
-  const fetchSuggestionsAndBreadcrumb = async (queryRecommendationChatId, iterationIndex) => {
+  const fetchMetadata = async (queryRecommendationChatId, iterationIndex) => {
     if (!isMounted.current) {
       return
     }
     if (recommendationChatId !== queryRecommendationChatId || iterationIndex <= 0 || iterations.length <= iterationIndex || (iterations[iterationIndex]?.suggestions.length && iterations[iterationIndex]?.breadcrumb)) {
       return
     }
-    const { data: { is_section_registered: isReady, suggestions, breadcrumb } } = await API.getDiscoveryChatSuggestionsAndBreadCrumb(queryRecommendationChatId, iterationIndex)
+    const { data: { is_section_registered: isReady, suggestions, should_recommend_projects: shouldRecommendProjects } } = await API.getDiscoveryChatMetadata(queryRecommendationChatId, iterationIndex)
     if (isReady) {
       updateIteration(iterationIndex, 'suggestions', (_) => suggestions)
-      updateIteration(iterationIndex, 'breadcrumb', (_) => breadcrumb)
+      setShouldShowResults(shouldRecommendProjects)
     } else {
-      setTimeout(() => fetchSuggestionsAndBreadcrumb(queryRecommendationChatId, iterationIndex), 2000)
+      setTimeout(() => fetchMetadata(queryRecommendationChatId, iterationIndex), 2000)
     }
   }
   const fetchAIResponse = async (message) => {
     try {
       const iterationIndex = iterations.length - 1
-      setIterations(prevIterations => [...prevIterations, { response: '', breadcrumb: '...', suggestions: [], message: '' }])
+      updateIteration(iterationIndex, 'message', (_) => message)
+      setIterations(prevIterations => [...prevIterations, { response: '', suggestions: [], message: '' }])
       const response = await fetch(API._constructUrl(`/api/discovery_chats/${recommendationChatId}/messages/${iterationIndex}`), {
         method: 'POST',
         headers: {
@@ -114,7 +135,7 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
   const fetchAIResponseAudioMessage = async (blob) => {
     try {
       const iterationIndex = iterations.length - 1
-      setIterations(prevIterations => [...prevIterations, { response: '', breadcrumb: '...', suggestions: [], message: '' }])
+      setIterations(prevIterations => [...prevIterations, { response: '', suggestions: [], message: '' }])
 
       const formData = new FormData()
       formData.append('chat_id', recommendationChatId)
@@ -163,19 +184,27 @@ function Chat ({ recommendationChatId, setCurrIterationIndex }) {
   }
 
   return (
-    <div className="flex flex-col flex-grow-0 p-4 w-1/3 h-full bg-gray-200">
+    <div className={`transition-all duration-500 ease-in-out ${
+      shouldShowResults ? 'w-1/2' : 'w-full'} flex flex-col flex-grow-0 p-4 h-full bg-gray-200`}>
       {
         isLoading || !iterations.length
           ? <ClipLoader isLoading={isLoading || !iterations.length} />
           : (
             <>
-            <div className="h-30 mb-4">
-                  <Breadcrumbs breadcrumbs={breadcrumbs} navigateToIteration={navigateToIteration} />
-                </div>
+              {/* <div className="h-30 mb-4">
+                <Breadcrumbs breadcrumbs={breadcrumbs} navigateToIteration={navigateToIteration} />
+              </div> */}
               <div className='overflow-y-auto '>
-                <div className="items-center my-8">
+                <div id="messages" className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+                      {
+                          messages.map(({ isUser, message }, i) => (
+                              <ChatMessage key={i} isUser={isUser} message={message}/>
+                          ))
+                      }
+                  </div>
+                {/* <div className="items-center my-8">
                   <Question question={currIteration.response} />
-                </div>
+                </div> */}
               </div>
               <div className='mt-auto'>
                 <div className="flow-1 flow flow-col mt-auto">

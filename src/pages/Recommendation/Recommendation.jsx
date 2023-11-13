@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 const Recommendation = () => {
   const { id: recommendationChatId } = useParams()
   const [currIterationIndex, setCurrIterationIndex] = useState(0)
+  const [shouldShowResults, setShouldShowResults] = useState(false)
   useEffect(() => {
     setCurrIterationIndex(0)
   }, [recommendationChatId])
@@ -15,8 +16,8 @@ const Recommendation = () => {
       ? <ClipLoader isLoading={recommendationChatId == null} />
       : (
       <div className="flex h-screen">
-        <Chat recommendationChatId={recommendationChatId} setCurrIterationIndex={setCurrIterationIndex}/>
-        <SearchResults recommendationChatId={recommendationChatId} currIterationIndex={currIterationIndex}/>
+        <Chat recommendationChatId={recommendationChatId} setCurrIterationIndex={setCurrIterationIndex} setShouldShowResults={setShouldShowResults} shouldShowResults={shouldShowResults}/>
+        <SearchResults recommendationChatId={recommendationChatId} currIterationIndex={currIterationIndex} shouldShowResults={shouldShowResults}/>
       </div>
         )
   )

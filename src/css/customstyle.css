@@ -1,0 +1,164 @@
+.landing-form{
+    top: 25%;
+}
+
+.form-box{
+    box-shadow: 10px 10px #8f8f8f;
+    text-align: center;
+}
+
+.form-box p{
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.form-box .button.primary{
+    font-size: 24px;
+}
+
+.form-box .button.primary:hover{
+    border: 3px solid #013539;
+}
+
+.builderpal .chat-widget-wrap .chat-widget .chat-widget-messages{
+    height: auto;
+    padding: 20px;
+}
+
+.builderpal .starter-title-message{
+    font-weight: bold;
+    font-size: 18px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.builderpal .chat-widget-messages .button.starter{
+    margin-bottom: 20px;
+}
+
+.builderpal .chat-widget-messages .button.starter:hover, .builderpal .simplebar-content  .button.mid-dialogue:hover{
+    border: 3px solid #013539;
+}
+
+.builderpal .chat-widget-form .form-item.input-container {
+    width: 70%;
+}
+
+.builderpal .content-grid .grid {
+    margin-top: 0px;
+}
+
+
+.builderpal .content-grid{
+    padding-top: 100px;
+}
+
+.builderpal .content-grid .section-header {
+    margin-top: 30px;
+}
+
+.builderpal .simplebar-content  .button.mid-dialogue{
+    margin-top: 20px;
+}
+
+.builderpal .dreamerbuilderpal-left .chat-widget, .builderpal .instructablepal-left .chat-widget{
+    width: auto;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.builderpal .dreamerbuilderpal-left, .builderpal .dreamerbuilderpal-right, .builderpal .instructablepal-left, .builderpal .instructablepal-right{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.builderpal .dreamerbuilderpal-left, .builderpal .instructablepal-left{
+    width: 30%;
+    padding: 20px;
+}
+
+.builderpal .dreamerbuilderpal-right, .builderpal .instructablepal-right{
+    width: 68%;
+    padding: 20px;
+}
+
+.builderpal .dreamerbuilderpal-right .quest-item {
+    width: 47%;
+    display: inline-block;
+    margin-right: 2%;
+    vertical-align: top;
+    height: 380px;
+    margin-bottom: 40px;
+}
+
+.builderpal .dreamerbuilderpal-right .button.letstry, .builderpal .instructablepal-right .button.letstry {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    box-shadow: 4px 7px 12px 0 rgb(36 36 36 / 20%);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.builderpal .dreamerbuilderpal-right .button.letstry:hover, .builderpal .instructablepal-right .button.letstry:hover{
+    border: 3px solid black;
+}
+
+.builderpal .dreamerbuilderpal-right .quest-item .quest-item-text{
+    margin-top: 18px;
+    color: #3e3f5e;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.4285714286em;
+    height: 80px;
+    overflow: hidden;
+}
+
+.builderpal .dreamerbuilderpal-right .midway-checkpoint, .builderpal .instructablepal-right .midway-checkpoint{
+    margin-top: 0px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.builderpal .dreamerbuilderpal-right .midway-checkpoint .button, .builderpal .instructablepal-right .midway-checkpoint .button{
+    max-width: 40%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.builderpal .dreamerbuilderpal-right .midway-checkpoint .button:hover, .builderpal .instructablepal-right .midway-checkpoint .button:hover{
+    border: 3px solid black;
+}
+
+.builderpal .instructablepal-right .quest-esttime{
+    margin-top: 10px;
+}
+
+.builderpal .instructablepal-right .quest-item .quest-item-cover{
+    height: 250px;
+}
+
+.builderpal .instructablepal-right .quest-item .quest-item-info{
+    padding-top: 20px;
+}
+
+.builderpal .instructablepal-right .quest-item .quest-item-text{
+    height: 50px;
+    margin-top: 10px;
+    color: #3e3f5e;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.4285714286em;
+    overflow: hidden;
+}
+
+.builderpal .instructablepal-right .quest-item{
+    height: 485px;
+    width: 47%;
+    display: inline-block;
+    margin-right: 2%;
+    vertical-align: top;
+    margin-bottom: 40px;
+}

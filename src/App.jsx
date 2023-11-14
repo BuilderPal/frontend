@@ -12,6 +12,7 @@ import { RecommendationChat } from 'pages/RecommendationNew'
 import DynamicResults from 'pages/RecommendationNew/DynamicResults'
 import StaticResults from 'pages/RecommendationNew/StaticResults'
 import Landing from 'pages/Landing/Landing'
+import 'styles/sass/main.scss'
 
 const router = createBrowserRouter(
   createRoutesFromElements(

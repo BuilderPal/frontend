@@ -228,7 +228,7 @@
   box-shadow: $shadow-light;
   
   &.category-all {
-    background: url('../img/marketplace/category/01.png') no-repeat right top, $gradient-category-all;
+    background: url('../../img/marketplace/category/01.png') no-repeat right top, $gradient-category-all;
 
     .product-category-box-tag {
       color: $color-category-all;
@@ -236,7 +236,7 @@
   }
 
   &.category-featured {
-    background: url('../img/marketplace/category/02.png') no-repeat right top, $gradient-category-featured;
+    background: url('../../img/marketplace/category/02.png') no-repeat right top, $gradient-category-featured;
 
     .product-category-box-tag {
       color: $color-category-featured;
@@ -244,7 +244,7 @@
   }
 
   &.category-digital {
-    background: url('../img/marketplace/category/03.png') no-repeat right top, $gradient-category-digital;
+    background: url('../../img/marketplace/category/03.png') no-repeat right top, $gradient-category-digital;
 
     .product-category-box-tag {
       color: $color-category-digital;
@@ -252,7 +252,7 @@
   }
 
   &.category-physical {
-    background: url('../img/marketplace/category/04.png') no-repeat right top, $gradient-category-physical;
+    background: url('../../img/marketplace/category/04.png') no-repeat right top, $gradient-category-physical;
 
     .product-category-box-tag {
       color: $color-category-physical;

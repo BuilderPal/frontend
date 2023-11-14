@@ -392,9 +392,20 @@ $col-6_9: ($col-6-width / $grid-width_9) * 100%;
 /*--------------------
     MEDIA QUERIES 
 --------------------*/
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 2500px) {
   .content-grid {
-    max-width: 1142px;
+    max-width: 100%;
+    padding: 112px 112px 200px;
+    margin: 0 auto;
+
+    &.full {
+      padding: 80px 80px 0;
+    }
+
+    &.medium {
+      max-width: 100%;
+      padding: 0 112px 200px;
+    }
   }
 }
 

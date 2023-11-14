@@ -9,7 +9,7 @@ const Instruction = ({ navigatePrev, instructions, instructionIndex, setInstruct
   const instruction = instructions[instructionIndex]
   const navigate = useNavigate()
   return (
-    <div className="pb-10">
+    <div className="pb-10 h-full">
       <div className="fixed inset-x-0 bottom-0 px-4 py-2 flex justify-between z-10 space-x-5">
         {instructionIndex > 0
           ? <button className={'button primary'} onClick={() => setInstructionIndex(instructionIndex - 1)}>
@@ -51,7 +51,7 @@ const Instruction = ({ navigatePrev, instructions, instructionIndex, setInstruct
             <InstructionParagraph key={i} paragraph={paragraph} />
           )}
         </div>
-        {instruction.images.length > 0 && <div className='flex flex-col w-1/2 h-full'>
+        {instruction.images.length > 0 && <div className='flex flex-col w-1/2 h-full flex-grow-1'>
 
             <ImageCarousel images={instruction.images} />
         </div>}

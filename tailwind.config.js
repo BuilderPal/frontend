@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+
   darkMode: ['class'],
   content: [
     './pages/**/*.{js,jsx}',
@@ -98,6 +99,7 @@ module.exports = {
     }
   },
   plugins: [
-    require('tailwindcss-animate')
+    require('tailwindcss-animate'),
+    require('daisyui')
   ]
 }

@@ -1,6 +1,10 @@
+@import "~react-image-gallery/styles/scss/image-gallery.scss";
+
+
 /*------------
     RESET
 ------------*/
+
 @import 'reset';
 @import 'bootstrap/bootstrap-override';
 
@@ -66,3 +70,4 @@
 @import 'navigation';
 @import 'sidebar';
 @import 'section';
+

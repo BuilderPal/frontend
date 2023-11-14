@@ -72,7 +72,7 @@ const Guidance = () => {
   const navigate = useNavigate()
   console.log(userProject)
   return (
-    <div className='flex flex-col w-full'>
+    <div className='flex flex-col w-full min-h-screen'>
       <div className='flex space-x-5 p-3 items-center'>
         <>
           <button className="w-10 h-10 pl-1" onClick={() => navigate(-2)}><BiArrowBack /></button>

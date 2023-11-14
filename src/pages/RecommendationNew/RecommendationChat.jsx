@@ -49,6 +49,15 @@ export default function RecommendationChat () {
   const [isAwaitingResponse, setIsAwaitingResponse] = useState(false)
   const [shouldShowResults, setShouldShowResults] = useState(false)
   const [messages, setMessages] = useState([])
+  const bottomDiv = useRef(null)
+  const scrollToBottomChat = () => {
+    bottomDiv.current?.scrollIntoView({ behaviour: 'smooth' })
+  }
+  const currIteration = iterations.length ? iterations?.[iterations.length - 1] : null
+  const suggestions = currIteration?.suggestions
+  useEffect(() => {
+    scrollToBottomChat()
+  }, [messages, suggestions])
   // standard, conversational, guiding + messages_left
   const [conversationTypeMetadata, setConversationTypeMetadata] = useState({ type: 'standard' })
   const isMounted = useRef(true)
@@ -102,7 +111,6 @@ export default function RecommendationChat () {
   useEffect(() => {
     fetchMetadata(recommendationChatId, iterationsLength - 1)
   }, [recommendationChatId, iterationsLength])
-  const currIteration = iterations.length ? iterations?.[iterations.length - 1] : null
   const getDiscoveryResponseAudioAPI = (type, recommendationChatId, iterationIndex, blob) => {
     switch (type) {
       case 'standard':
@@ -352,9 +360,11 @@ export default function RecommendationChat () {
                             <p className="user-status-tag online">Online</p>
 
                           </div>
-                          <p className="button secondary p-2" onClick={createRecommendationChat}>
-                            <IoCreateOutline className='h-7 w-7' />
-                          </p>
+                          <button className="button medium secondary mid-dialogue w-24" >New Chat +</button>
+
+                          {/* <button className="button secondary p-2 pb-4flex flex-row items-center w-30" onClick={createRecommendationChat}>
+                          New Chat +
+                          </button> */}
 
                         </div>
 
@@ -375,7 +385,7 @@ export default function RecommendationChat () {
                                 ))
                             )
                           }
-
+                          <div ref={bottomDiv} />
                         </SimpleBar>
                         {/* User Input */}
                         <ChatInput sendTextMessage={(message) => setTimeout(() => fetchAIResponse(message), 1000)} sendAudioMessage={{ fetchAIResponseAudioMessage }} />

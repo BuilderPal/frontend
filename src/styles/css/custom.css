@@ -1,51 +1,55 @@
-.landing-form{
+.landing-form {
     top: 25%;
 }
 
-.form-box{
+.form-box {
     box-shadow: 10px 10px #8f8f8f;
     text-align: center;
 }
 
-.form-box p{
+.form-box p {
     font-size: 24px;
     font-weight: bold;
     padding-top: 30px;
     padding-bottom: 30px;
 }
-.button.warning{
+
+.button.warning {
     background: #f9515c;
-    
+
 }
-.button.warning:hover{
+
+.button.warning:hover {
     background: #dd343f;
-    
+
 }
-.form-box .button.primary{
+
+.form-box .button.primary {
     font-size: 24px;
 }
 
-.form-box .button.primary:hover{
+.form-box .button.primary:hover {
     border: 3px solid #013539;
 }
 
-.builderpal .chat-widget-wrap .chat-widget .chat-widget-messages{
+.builderpal .chat-widget-wrap .chat-widget .chat-widget-messages {
     height: auto;
     padding: 20px;
 }
 
-.builderpal .starter-title-message{
+.builderpal .starter-title-message {
     font-weight: bold;
     font-size: 18px;
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
-.builderpal .chat-widget-messages .button.starter{
+.builderpal .chat-widget-messages .button.starter {
     margin-bottom: 20px;
 }
 
-.builderpal .chat-widget-messages .button.starter:hover, .builderpal .simplebar-content  .button.mid-dialogue:hover{
+.builderpal .chat-widget-messages .button.starter:hover,
+.builderpal .simplebar-content .button.mid-dialogue:hover {
     border: 3px solid #013539;
 }
 
@@ -58,7 +62,7 @@
 }
 
 
-.builderpal .content-grid{
+.builderpal .content-grid {
     padding-top: 100px;
 }
 
@@ -66,27 +70,33 @@
     margin-top: 30px;
 }
 
-.builderpal .simplebar-content  .button.mid-dialogue{
+.builderpal .simplebar-content .button.mid-dialogue {
     margin-top: 20px;
 }
 
-.builderpal .dreamerbuilderpal-left .chat-widget, .builderpal .instructablepal-left .chat-widget{
+.builderpal .dreamerbuilderpal-left .chat-widget,
+.builderpal .instructablepal-left .chat-widget {
     width: auto;
     padding: 20px;
     border-radius: 20px;
 }
 
-.builderpal .dreamerbuilderpal-left, .builderpal .dreamerbuilderpal-right, .builderpal .instructablepal-left, .builderpal .instructablepal-right{
+.builderpal .dreamerbuilderpal-left,
+.builderpal .dreamerbuilderpal-right,
+.builderpal .instructablepal-left,
+.builderpal .instructablepal-right {
     display: inline-block;
     vertical-align: top;
 }
 
-.builderpal .dreamerbuilderpal-left, .builderpal .instructablepal-left{
+.builderpal .dreamerbuilderpal-left,
+.builderpal .instructablepal-left {
     width: 30%;
     padding: 20px;
 }
 
-.builderpal .dreamerbuilderpal-right, .builderpal .instructablepal-right{
+.builderpal .dreamerbuilderpal-right,
+.builderpal .instructablepal-right {
     width: 68%;
     padding: 20px;
 }
@@ -100,7 +110,8 @@
     margin-bottom: 40px;
 }
 
-.builderpal .dreamerbuilderpal-right .button.letstry, .builderpal .instructablepal-right .button.letstry {
+.builderpal .dreamerbuilderpal-right .button.letstry,
+.builderpal .instructablepal-right .button.letstry {
     background-color: white;
     color: black;
     border: 1px solid black;
@@ -109,11 +120,12 @@
     margin-bottom: 20px;
 }
 
-.builderpal .dreamerbuilderpal-right .button.letstry:hover, .builderpal .instructablepal-right .button.letstry:hover{
+.builderpal .dreamerbuilderpal-right .button.letstry:hover,
+.builderpal .instructablepal-right .button.letstry:hover {
     border: 3px solid black;
 }
 
-.builderpal .dreamerbuilderpal-right .quest-item .quest-item-text{
+.builderpal .dreamerbuilderpal-right .quest-item .quest-item-text {
     margin-top: 18px;
     color: #3e3f5e;
     font-size: .875rem;
@@ -123,35 +135,38 @@
     overflow: hidden;
 }
 
-.builderpal .dreamerbuilderpal-right .midway-checkpoint, .builderpal .instructablepal-right .midway-checkpoint{
+.builderpal .dreamerbuilderpal-right .midway-checkpoint,
+.builderpal .instructablepal-right .midway-checkpoint {
     margin-top: 0px;
     text-align: center;
     margin-bottom: 40px;
 }
 
-.builderpal .dreamerbuilderpal-right .midway-checkpoint .button, .builderpal .instructablepal-right .midway-checkpoint .button{
+.builderpal .dreamerbuilderpal-right .midway-checkpoint .button,
+.builderpal .instructablepal-right .midway-checkpoint .button {
     max-width: 40%;
     margin-right: 2%;
     margin-left: 2%;
 }
 
-.builderpal .dreamerbuilderpal-right .midway-checkpoint .button:hover, .builderpal .instructablepal-right .midway-checkpoint .button:hover{
+.builderpal .dreamerbuilderpal-right .midway-checkpoint .button:hover,
+.builderpal .instructablepal-right .midway-checkpoint .button:hover {
     border: 3px solid black;
 }
 
-.builderpal .instructablepal-right .quest-esttime{
+.builderpal .instructablepal-right .quest-esttime {
     margin-top: 10px;
 }
 
-.builderpal .instructablepal-right .quest-item .quest-item-cover{
+.builderpal .instructablepal-right .quest-item .quest-item-cover {
     height: 250px;
 }
 
-.builderpal .instructablepal-right .quest-item .quest-item-info{
+.builderpal .instructablepal-right .quest-item .quest-item-info {
     padding-top: 20px;
 }
 
-.builderpal .instructablepal-right .quest-item .quest-item-text{
+.builderpal .instructablepal-right .quest-item .quest-item-text {
     height: 50px;
     margin-top: 10px;
     color: #3e3f5e;
@@ -161,7 +176,7 @@
     overflow: hidden;
 }
 
-.builderpal .instructablepal-right .quest-item{
+.builderpal .instructablepal-right .quest-item {
     height: 485px;
     width: 47%;
     display: inline-block;
@@ -170,20 +185,84 @@
     margin-bottom: 40px;
 }
 
-.profile-header .profile-header-info{
+.profile-header .profile-header-info {
     height: auto;
-    }
-    
-    .user-short-description.big{
-     padding-top: 20px;
-    }
-    
-    .profile-header .profile-header-info .user-stats{
+}
+
+.user-short-description.big {
+    padding-top: 20px;
+}
+
+.profile-header .profile-header-info .user-stats {
     position: relative;
     top: 20px;
     left: auto;
-    }
-    
-    .user-stat{
+}
+
+.user-stat {
     width: 100%;
-    }
+}
+
+.downloads {
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    max-width: 500px;
+    /* Adjust this as needed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    margin: auto;
+}
+
+#attachments {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.thumb-wrapper {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+.file-thumb {
+    margin-right: 10px;
+    background-color: #f2f2f2;
+    /* Placeholder in case the image fails to load */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.file-thumb img {
+    display: block;
+}
+
+.title {
+    font-size: 16px;
+}
+
+.file-actions .btn {
+    text-decoration: none;
+    background-color: #d9534f;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.file-actions .btn:hover {
+    background-color: #c9302c;
+}

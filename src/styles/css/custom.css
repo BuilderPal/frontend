@@ -8,7 +8,7 @@
 }
 
 .form-box p {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
     padding-top: 30px;
     padding-bottom: 30px;
@@ -25,7 +25,7 @@
 }
 
 .form-box .button.primary {
-    font-size: 24px;
+    font-size: 30px;
 }
 
 .form-box .button.primary:hover {
@@ -39,7 +39,7 @@
 
 .builderpal .starter-title-message {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 21px;
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -128,7 +128,7 @@
 .builderpal .dreamerbuilderpal-right .quest-item .quest-item-text {
     margin-top: 18px;
     color: #3e3f5e;
-    font-size: .875rem;
+    font-size: 1rem;
     font-weight: 500;
     line-height: 1.4285714286em;
     height: 80px;
@@ -156,6 +156,8 @@
 
 .builderpal .instructablepal-right .quest-esttime {
     margin-top: 10px;
+    font-size: 1rem;
+
 }
 
 .builderpal .instructablepal-right .quest-item .quest-item-cover {
@@ -170,7 +172,7 @@
     height: 50px;
     margin-top: 10px;
     color: #3e3f5e;
-    font-size: .875rem;
+    font-size: 1rem;
     font-weight: 500;
     line-height: 1.4285714286em;
     overflow: hidden;
@@ -249,7 +251,7 @@
 }
 
 .title {
-    font-size: 16px;
+    font-size: 19px;
 }
 
 .file-actions .btn {
@@ -259,7 +261,7 @@
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 19px;
     cursor: pointer;
 }
 
@@ -312,7 +314,7 @@
     margin-left: 10px; /* Spacing between buttons */
     text-decoration: none;
     color: #333; /* Darker text for the buttons */
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
 }
 

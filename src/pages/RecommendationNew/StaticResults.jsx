@@ -5,7 +5,7 @@ import Loader from 'components/ui/loader'
 import StaticResult from 'components/recommendation_new/StaticResult'
 import { API } from 'lib/utils'
 import logo from 'styles/img/craft.png'
-
+import Confetti from 'react-confetti'
 const LIMIT = 6
 
 export default function StaticResults () {
@@ -13,6 +13,22 @@ export default function StaticResults () {
   const [staticSearchResults, setStaticSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(null)
   const [isLoadingStatic, setIsLoadingStatic] = useState(true)
+  const [confettiDuration, setConfettiDuration] = useState(0)
+
+  // useEffect to set up the interval
+  useEffect(() => {
+    // The interval function that decreases the countdown
+    const intervalId = setInterval(() => {
+      setConfettiDuration((prevCountdown) => (prevCountdown > 0 ? prevCountdown - 1 : 0))
+    }, 1000)
+
+    // Clear the interval on component unmount or when countdown hits 0
+    return () => clearInterval(intervalId)
+  }, [])
+
+  // Function to reset the countdown
+  const resetConfettiDuration = () => setConfettiDuration(5)
+
   const isMount = useRef(true)
   const navigate = useNavigate()
   useEffect(() => {
@@ -75,6 +91,7 @@ export default function StaticResults () {
           ? <Loader />
           : (
             <>
+              {confettiDuration ? <Confetti /> : <></>}
               <header className="header">
 
                 <div className="header-actions">
@@ -120,7 +137,7 @@ export default function StaticResults () {
                       /></center>
 
                       <p className="starter-title-message">Did you know? I handpicked all these projects based on materials available at VIVISTOP. How cool is that!</p>
-                      <button className="button medium primary starter">Waaay cool!</button>
+                      <button className="button medium primary starter" onClick={resetConfettiDuration}>Waaay cool!</button>
                       <button className="button medium primary starter" onClick={navigateToChat}>We should talk more</button>
                     </div>
 
@@ -137,7 +154,7 @@ export default function StaticResults () {
                       }
                         <div className="midway-checkpoint">
                           <p className="starter-title-message">What do you think of these projects I handpicked from Instructables for you?</p>
-                          <button className="button medium primary starter">They're awesome! ❤️❤️❤️</button>
+                          <button className="button medium primary starter" onClick={resetConfettiDuration}>They're awesome! ❤️❤️❤️</button>
                           <button className="button medium primary starter" onClick={navigateToChat}>Uh... maybe we should talk more</button>
                         </div>
                         {

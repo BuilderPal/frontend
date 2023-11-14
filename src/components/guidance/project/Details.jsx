@@ -10,6 +10,7 @@ import ImageCarousel from 'components/guidance/project/ImageCarousel'
 import { Button } from 'components/ui/button'
 import { IoIosArrowForward } from 'react-icons/io'
 import { AiOutlineCheck } from 'react-icons/ai'
+import easyImg from 'styles/img/quest/cover/01.png'
 
 const Details = ({ navigateNext, title, description, complexity, duration_in_minutes: duration, resources, instructions, instructionIndex, setInstructionIndex, image, categories, userProjectId }) => {
   console.log(image)
@@ -35,7 +36,7 @@ const Details = ({ navigateNext, title, description, complexity, duration_in_min
       <div className='grow p-3'>
         <div className="profile-header">
 
-          <img src={image} alt="cover-01" className='object-cover w-full h-80' />
+          <img src={image || easyImg} alt="cover-01" className={`object-cover w-full ${image ? 'h-80' : 'h-40'}`} />
 
           <div className="profile-header-info pb-10 px-5">
 

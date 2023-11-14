@@ -169,3 +169,21 @@
     vertical-align: top;
     margin-bottom: 40px;
 }
+
+.profile-header .profile-header-info{
+    height: auto;
+    }
+    
+    .user-short-description.big{
+     padding-top: 20px;
+    }
+    
+    .profile-header .profile-header-info .user-stats{
+    position: relative;
+    top: 20px;
+    left: auto;
+    }
+    
+    .user-stat{
+    width: 100%;
+    }

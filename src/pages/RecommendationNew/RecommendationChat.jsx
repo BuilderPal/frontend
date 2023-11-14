@@ -95,6 +95,7 @@ export default function RecommendationChat () {
   }, [iterationsLength])
 
   useEffect(() => {
+    setShouldShowResults(false)
     fetchRecommendationChat(recommendationChatId)
   }, [recommendationChatId])
   useEffect(() => {

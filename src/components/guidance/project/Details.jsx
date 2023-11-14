@@ -90,7 +90,7 @@ const Details = ({ navigateNext, title, description, complexity, duration_in_min
             {resourcesChecked.map(({ resource, checked }, i) => (
               <div className="checkbox-line pb-3" key={i}>
                 <div className="checkbox-wrap" onClick={() => toggleResourceChecked(i)}>
-                  <input type="checkbox" checked={checked}/>
+                  <input type="checkbox" checked={checked} />
 
                   <div className="checkbox-box">
                     {checked && <AiOutlineCheck color='white' />}
@@ -105,7 +105,7 @@ const Details = ({ navigateNext, title, description, complexity, duration_in_min
           </div>
         </div>
       </div>
-      <div className='grow p-3'>
+      <div className='grow p-3 mb-12'>
 
         <div className="widget-box">
 
@@ -127,10 +127,8 @@ const Details = ({ navigateNext, title, description, complexity, duration_in_min
           </div>
         </div>
       </div>
-      <div className="fixed inset-x-0 bottom-0 px-4 py-2 flex justify-between z-10">
-        <button className="button primary" onClick={() => navigateNext()}>
-          Let's Start Building! <IoIosArrowForward className='ml-1' />
-        </button>
+      <div className="fixed inset-x-0 bottom-0 px-4 py-2 flex justify-between z-10"><button className="button primary">Let's Start Building! <IoIosArrowForward className='ml-1' />
+      </button>
       </div>
     </div>
 

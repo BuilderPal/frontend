@@ -155,6 +155,8 @@ c0,0,1.26,0.139,2.059-0.83c2.085-2.527,3.239-3.879,5.602-4C23.803,26,22.752,34,1
                                     </div>
                                         )
                                   }
+
+                                  {totalResults && totalResults > staticSearchResults.length ? <button className="button primary starter" onClick={() => fetchStaticSearchResults(false, recommendationChatId, currIterationIndex, staticSearchResults.length, LIMIT)}>Load More +</button> : <></>}
                                 </div>
                             </div>
                         </>

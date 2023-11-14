@@ -163,6 +163,7 @@ export default function DynamicResults () {
                                     </div>
                                         )
                                   }
+                {dynamicSearchResults.length < MAX_DYNAMIC_RESULTS && (<button className="button primary starter" onClick={() => fetchDynamicSearchResults(false, recommendationChatId, currIterationIndex, dynamicSearchResults.length, LIMIT)}>Load More +</button>)}
 
                                 </div>
                             </div>

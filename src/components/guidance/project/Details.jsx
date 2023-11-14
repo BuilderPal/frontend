@@ -127,7 +127,7 @@ const Details = ({ navigateNext, title, description, complexity, duration_in_min
           </div>
         </div>
       </div>
-      <div className="fixed inset-x-0 bottom-0 px-4 py-2 flex justify-between z-10"><button className="button primary">Let's Start Building! <IoIosArrowForward className='ml-1' />
+      <div className="fixed inset-x-0 bottom-0 px-4 py-2 flex justify-between z-10"><button className="button primary" onClick={() => navigateNext()}>Let's Start Building! <IoIosArrowForward className='ml-1' />
       </button>
       </div>
     </div>

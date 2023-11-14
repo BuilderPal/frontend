@@ -7,9 +7,8 @@ const ImageCarousel = ({ images }) => {
     <Carousel
         showThumbs={false}
         showStatus={false}
-        infiniteLoop={true}
-        autoPlay={true}
-        interval={5000} // Adjust as needed
+        infiniteLoop={false}
+        autoPlay={false}
       >
         {images.map((image, index) => (
             <img key={index}src={image} alt={`${index}`} className='object-cover rounded-xl'/>

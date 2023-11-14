@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import Recorder from 'components/guidance/chat/Recorder'
+import React, { useState, useRef } from 'react'
+import Recorder from 'components/recommendation_new/Recorder'
 import { Button } from 'components/ui/button'
 import { Input } from 'components/ui/input'
 import { RxCross1 } from 'react-icons/rx'
@@ -11,23 +11,41 @@ export default function ChatInput ({ sendTextMessage, sendAudioMessage }) {
   const [isRecording, setIsRecording] = useState(false)
   const [recordedBlob, setRecordedBlob] = useState(null)
   const isAudioActive = isRecording || recordedBlob
-  const sendMessage = async () => {
-    if (!currMessage && !recordedBlob) {
+  const mediaRecorder = useRef(null)
+
+  const sendAudioMessageWrapper = async (blob) => {
+    if (!blob) {
       return
     }
     setIsAwaitingResponse(true)
+    setIsRecording(false)
 
-    const message = currMessage
-    const blob = recordedBlob
-    setCurrMessage('')
-    setRecordedBlob(null)
+    console.log('sendAudioMessageWrapper', blob)
 
-    if (blob) {
-      await sendAudioMessage(recordedBlob)
-    } else {
-      await sendTextMessage(message)
-    }
+    await sendAudioMessage(blob)
+    // setRecordedBlob(null)
+
     setIsAwaitingResponse(false)
+  }
+  const sendMessage = async () => {
+    if (isRecording) {
+      if (mediaRecorder.current) {
+        mediaRecorder.current.stop()
+
+        // mediaRecorder.current.ondataavailable = null
+      }
+    } else {
+      if (!currMessage) {
+        return
+      }
+      setIsAwaitingResponse(true)
+
+      const message = currMessage
+      setCurrMessage('')
+
+      await sendTextMessage(message)
+      setIsAwaitingResponse(false)
+    }
   }
   const onKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -66,9 +84,7 @@ export default function ChatInput ({ sendTextMessage, sendAudioMessage }) {
                     </svg>
 
                 </p>
-                <p className="button primary padded">
-                    <img src={micImg} className="mt-[11px] w-[25px] h-[25px]" />
-                </p>
+                <Recorder isRecording={isRecording} setIsRecording={setIsRecording} setRecordedBlob={setRecordedBlob} mediaRecorder={mediaRecorder} sendAudioMessageWrapper={sendAudioMessageWrapper}/>
 
             </div>
 

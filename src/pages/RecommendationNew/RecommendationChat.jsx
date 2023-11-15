@@ -39,7 +39,7 @@ const guidingQuestions = [
   }
 ]
 
-const GUIDING_QUESTIONS_MIN = 5
+const GUIDING_QUESTIONS_MIN = 3
 
 export default function RecommendationChat () {
   const { id: recommendationChatId } = useParams()
@@ -360,7 +360,7 @@ export default function RecommendationChat () {
                             <p className="user-status-tag online">Online</p>
 
                           </div>
-                          <button className="button medium secondary mid-dialogue w-24" >New Chat +</button>
+                          <button className="button medium secondary mid-dialogue w-24" onClick={createRecommendationChat}>New Chat +</button>
 
                           {/* <button className="button secondary p-2 pb-4flex flex-row items-center w-30" onClick={createRecommendationChat}>
                           New Chat +

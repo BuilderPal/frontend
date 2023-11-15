@@ -114,7 +114,8 @@ export const userProjectLoader = async ({ params: { id } }) => {
       body: instruction.content,
       images: instruction.media_items
         .filter(media => media.media_type === 'image')
-        .map(media => media.url)
+        .map(media => media.url),
+      downloads: instruction.downloads
     })),
     image: project.image
   }

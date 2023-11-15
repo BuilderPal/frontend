@@ -50,6 +50,7 @@ const Instruction = ({ navigatePrev, instructions, instructionIndex, setInstruct
           {instruction.body.map((paragraph, i) =>
             <InstructionParagraph key={i} paragraph={paragraph} />
           )}
+          {instruction.downloads ? <InstructionParagraph paragraph={instruction.downloads}/> : <></>}
         </div>
         {instruction.images.length > 0 && <div className='flex flex-col w-1/2 h-full flex-grow-1'>
 

@@ -57,7 +57,7 @@ export default function RecommendationChat () {
   const suggestions = currIteration?.suggestions
   useEffect(() => {
     scrollToBottomChat()
-  }, [messages, suggestions])
+  }, [iterationsLength, suggestions])
   // standard, conversational, guiding + messages_left
   const [conversationTypeMetadata, setConversationTypeMetadata] = useState({ type: 'standard' })
   const isMounted = useRef(true)

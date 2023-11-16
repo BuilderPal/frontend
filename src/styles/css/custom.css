@@ -75,7 +75,8 @@
 }
 
 .builderpal .dreamerbuilderpal-left .chat-widget,
-.builderpal .instructablepal-left .chat-widget {
+.builderpal .instructablepal-left .chat-widget,
+.guidance-chat.chat-widget {
     width: auto;
     padding: 20px;
     border-radius: 20px;

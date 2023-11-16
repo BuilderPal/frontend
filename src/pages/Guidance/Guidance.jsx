@@ -10,65 +10,18 @@ import { AiOutlineCheck } from 'react-icons/ai'
 import React, { useState, useEffect } from 'react'
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
 import { Button } from 'components/ui/button'
-const templateUserProject = {
-  title: 'Sample Project Title',
-  duration_in_minutes: 60,
-  complexity: 'high',
-  resources: ['Resource A', 'Resource B'],
-  categories: ['Category A', 'Category B'],
-  description: 'This is a description of the sample project.',
-  instructions: [
-    {
-      instruction_index: 0,
-      title: 'Start with a Diamond',
-      body: [
-        'First, begin with a diamond piece of copy paper',
-        'I have outlined the edges of my paper in blue to make it easier.',
-        '(TO MAKE A SQUARE: You can make a square from a rectangular piece.)',
-        'I usually make two snowflakes for every 8.5"x11" piece of paper.'
-      ],
-      images: [
-        'https://content.instructables.com/FY2/WTVT/KFWJO05V/FY2WTVTKFWJO05V.jpg?auto=webp&frame=1&width=1024&height=1024&fit=bounds&md=0889d7a436a4385d133da7232be78fe9',
-        'https://content.instructables.com/FA5/85WW/KFQTVHPK/FA585WWKFQTVHPK.jpg?auto=webp&frame=1&fit=bounds&md=b311f18cf945ecf2ba6602a84449b86a'
-      ]
-    },
-    {
-      instruction_index: 1,
-      title: 'Start with a Square',
-      body: [
-        'First, begin with a square piece of copy paper',
-        'I have outlined the edges of my paper in blue to make it easier.',
-        '(TO MAKE A SQUARE: You can make a square from a rectangular piece.)',
-        'I usually make two snowflakes for every 8.5"x11" piece of paper.'
-      ],
-      images: [
-        'https://content.instructables.com/FY2/WTVT/KFWJO05V/FY2WTVTKFWJO05V.jpg?auto=webp&frame=1&width=1024&height=1024&fit=bounds&md=0889d7a436a4385d133da7232be78fe9'
-      ]
-    },
-    {
-      instruction_index: 2,
-      title: 'Start with a Circle',
-      body: [
-        'First, begin with a circle piece of copy paper',
-        'I have outlined the edges of my paper in blue to make it easier.',
-        '(TO MAKE A SQUARE: You can make a square from a rectangular piece.)',
-        'I usually make two snowflakes for every 8.5"x11" piece of paper.'
-      ],
-      images: [
-        'https://content.instructables.com/FY2/WTVT/KFWJO05V/FY2WTVTKFWJO05V.jpg?auto=webp&frame=1&width=1024&height=1024&fit=bounds&md=0889d7a436a4385d133da7232be78fe9'
-      ]
-    }
-  ]
-}
-
+import GuidanceChat from 'components/guidance/chat2/GuidanceChat'
 const Guidance = () => {
-  const { id: userProjectid } = useParams()
-  const userProjectLoaded = useLoaderData()
+  const { id: userProjectId } = useParams()
+  const { userProject: userProjectLoaded, guidanceChatId } = useLoaderData()
   const [userProject, setUserProject] = useState(userProjectLoaded)
-  const [instructionIndex, setInstructionIndex] = useState(0)
-  const [isLoadingProject, setIsLoadingProject] = useState(false)
-  const [isViewingInstructions, setIsViewingInstructions] = useState(false)
-
+  const navigateInstruction = async (target) => {
+    const { data: updatedProject } = await API.updateCurrentInstructionIndex(userProjectId, target)
+    console.log('navigateInstruction', updatedProject)
+    setUserProject(processUserProject(updatedProject))
+  }
+  const instructionIndex = userProject.current_instruction_index
+  const isViewingInstructions = instructionIndex >= 0
   const navigate = useNavigate()
   console.log(userProject)
   return (
@@ -84,25 +37,25 @@ const Guidance = () => {
         ? <Instruction
                 instructions={userProject.instructions}
                 instructionIndex={instructionIndex}
-                setInstructionIndex={setInstructionIndex}
-                navigatePrev={() => setIsViewingInstructions(false)}
+                setInstructionIndex={navigateInstruction}
+                guidanceChatId={guidanceChatId}
+                userProjectId={userProjectId}
               />
         : <Details
                 {...userProject}
                 instructionIndex={instructionIndex}
-                setInstructionIndex={setInstructionIndex}
-                navigateNext={() => setIsViewingInstructions(true)}
-                userProjectId={userProjectid}
+                setInstructionIndex={navigateInstruction}
+                userProjectId={userProjectId}
               />}
-
+      {/* {isViewingInstructions ? <GuidanceChat guidanceChatId={guidanceChatId} userProjectId={userProjectId}/> : <></>} */}
     </div>
   )
 }
 
-export const userProjectLoader = async ({ params: { id } }) => {
-  const { data: project } = await API.getUserProject(id)
-  const userProject = {
+const processUserProject = (project) => {
+  return {
     title: project.title,
+    current_instruction_index: project.current_instruction_index,
     duration_in_minutes: project.duration_in_minutes,
     complexity: project.complexity,
     resources: project.resources,
@@ -119,7 +72,12 @@ export const userProjectLoader = async ({ params: { id } }) => {
     })),
     image: project.image
   }
-  return userProject
+}
+
+export const userProjectLoader = async ({ params: { id } }) => {
+  const { data: project } = await API.getUserProject(id)
+  const { data: { chat_id: guidanceChatId } } = await API.createGuidanceChat(id)
+  return { userProject: processUserProject(project), guidanceChatId }
 }
 
 export default Guidance

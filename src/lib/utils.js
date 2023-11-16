@@ -98,6 +98,42 @@ class APIClass {
     return axios.post(this._constructUrl(`/api/chats/dynamic/${discoveryChatId}`))
   }
 
+  updateCurrentInstructionIndex (userProjectId, currentInstructionIndex) {
+    return axios.put(this._constructUrl(`/api/user_projects/${userProjectId}/current_instruction`), { current_instruction_index: currentInstructionIndex })
+  }
+
+  // Guidance Chat related methods
+  createGuidanceChat (userProjectId) {
+    return axios.post(this._constructUrl(`/api/guidance_chats/${userProjectId}`))
+  }
+
+  getGuidanceChat (id) {
+    return axios.get(this._constructUrl(`/api/guidance_chats/${id}`))
+  }
+
+  getGuidanceResponse (guidanceChatId, iterationIndex, message) {
+    console.log('Guidance Message', { guidanceChatId, iterationIndex, message })
+    return fetch(this._constructUrl(`/api/guidance_chats/${guidanceChatId}/messages/${iterationIndex}`), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message })
+    })
+  }
+
+  getGuidanceSpeechResponse (guidanceChatId, iterationIndex, blob) {
+    console.log('Guidance Speech', { guidanceChatId, iterationIndex })
+
+    const formData = new FormData()
+    formData.append('chat_id', guidanceChatId)
+    formData.append('audio', blob)
+    return fetch(API._constructUrl(`/api/guidance_chats/${guidanceChatId}/speech/${iterationIndex}`), {
+      method: 'POST',
+      body: formData
+    })
+  }
+
   // Discovery Chat related methods
 
   createDiscoveryChat () {

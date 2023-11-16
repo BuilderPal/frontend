@@ -12,32 +12,6 @@ import Suggestion from 'components/recommendation_new/Suggestion'
 import ChatInput from 'components/recommendation_new/ChatInput'
 import { IoCreateOutline } from 'react-icons/io5'
 import logo from 'styles/img/craft.png'
-const guidingQuestions = [
-  {
-    response: 'What do you like to do during your free time?',
-    suggestions: ['Coding', 'Draw or Crafting', 'Playing video games']
-  },
-  {
-    response: 'What are your interests?',
-    suggestions: ['Technology and Robotics', 'Science and Nature', 'Art and Music']
-  }, ,
-  {
-    response: 'What have you done or made before in the past that was cool to you?',
-    suggestions: []
-  },
-  {
-    response: 'How much time do you have to complete the project',
-    suggestions: ['Within 15 minutes', 'Couple of hours', 'A week']
-  },
-  {
-    response: 'What tools do you like to work with?',
-    suggestions: ['Basic Hand Tools and Craft Supplies', 'Computer and Software', 'Electronics and Kits p p']
-  },
-  {
-    response: 'What are your interests?',
-    suggestions: []
-  }
-]
 
 const GUIDING_QUESTIONS_MIN = 3
 
@@ -388,7 +362,7 @@ export default function RecommendationChat () {
                           <div ref={bottomDiv} />
                         </SimpleBar>
                         {/* User Input */}
-                        <ChatInput sendTextMessage={(message) => setTimeout(() => fetchAIResponse(message), 1000)} sendAudioMessage={{ fetchAIResponseAudioMessage }} />
+                        <ChatInput sendTextMessage={(message) => setTimeout(() => fetchAIResponse(message), 1000)} sendAudioMessage={{ fetchAIResponseAudioMessage }} isAwaitingResponse={isAwaitingResponse}/>
 
                       </div>
 

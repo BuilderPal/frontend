@@ -5,27 +5,22 @@ import { Input } from 'components/ui/input'
 import { RxCross1 } from 'react-icons/rx'
 import micImg from 'styles/img/builderpal/whitemic50.png'
 
-export default function ChatInput ({ sendTextMessage, sendAudioMessage }) {
+export default function ChatInput ({ sendTextMessage, sendAudioMessage, isAwaitingResponse }) {
   const [currMessage, setCurrMessage] = useState('')
-  const [isAwaitingResponse, setIsAwaitingResponse] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [recordedBlob, setRecordedBlob] = useState(null)
-  const isAudioActive = isRecording || recordedBlob
   const mediaRecorder = useRef(null)
 
   const sendAudioMessageWrapper = async (blob) => {
     if (!blob) {
       return
     }
-    setIsAwaitingResponse(true)
     setIsRecording(false)
 
     console.log('sendAudioMessageWrapper', blob)
 
     await sendAudioMessage(blob)
-    // setRecordedBlob(null)
-
-    setIsAwaitingResponse(false)
+    setRecordedBlob(null)
   }
   const sendMessage = async () => {
     if (isRecording) {
@@ -38,13 +33,11 @@ export default function ChatInput ({ sendTextMessage, sendAudioMessage }) {
       if (!currMessage) {
         return
       }
-      setIsAwaitingResponse(true)
 
       const message = currMessage
       setCurrMessage('')
 
       await sendTextMessage(message)
-      setIsAwaitingResponse(false)
     }
   }
   const onKeyPress = (e) => {
